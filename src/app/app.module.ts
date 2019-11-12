@@ -8,12 +8,20 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { NewbusinesscardComponent } from './newbusinesscard/newbusinesscard.component';
+import { BusinesscardComponent } from './businesscard/businesscard.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    NotFoundComponent,
+    NewbusinesscardComponent,
+    BusinesscardComponent
   ],
   imports: [
     BrowserModule,

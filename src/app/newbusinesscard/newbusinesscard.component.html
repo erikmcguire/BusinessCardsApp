@@ -1,0 +1,28 @@
+<form class="ui form segment">
+    <h3 class="ui header">Add a Card</h3>
+
+    <div class="field">
+        <label for="name">First Name: </label>
+        <input name="firstName" id="firstName" #firstName>
+    </div>
+    <div class="field">
+        <label for="description">Last Name: </label>
+        <input name="lastName" id="lastName" #lastName>
+    </div>
+    <div class="field">
+        <label for="organization">Organization: </label>
+        <input name="organization" id="organization" #organization>
+    </div>
+    <div class="field">
+        <label for="email">Email: </label>
+        <input name="email" id="email" #email>
+    </div>
+    <div class="field">
+        <label for="phone">Phone: </label>
+        <input name="phone" id="phone" #phone>
+    </div>
+    <button (click)="addCard(firstName, lastName, organization, email, phone)"
+            class="ui positive right button">
+        Submit Card
+    </button>
+</form>

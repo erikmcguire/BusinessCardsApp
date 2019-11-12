@@ -1,0 +1,9 @@
+<h3>Business Cards</h3>
+<div class="grid grid-pad">
+  <app-newbusinesscard (onAdd)="addCard($event)"></app-newbusinesscard>
+  <ul>
+      <li *ngFor="let card of cards | async" class="col-1-4">
+          <app-businesscard [card]="card"></app-businesscard>
+      </li>
+  </ul>
+</div>
