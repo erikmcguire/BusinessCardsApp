@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { config } from '../app.config';
 import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { ImageService } from '../image.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class DashboardComponent implements OnInit {
   cards: Observable<any[]>;
-  constructor(private appService: AppService, private afs: AngularFirestore) { }
+  constructor(private appService: AppService, private afs: AngularFirestore,
+              private imgService: ImageService) { }
 
   ngOnInit() {
       this.cards = this.afs
@@ -35,5 +37,8 @@ export class DashboardComponent implements OnInit {
           })
         );
   }
+ 
+
+
 
 }

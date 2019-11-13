@@ -12,14 +12,18 @@ export class NewbusinesscardComponent implements OnInit {
     }
 
     addCard(firstName: HTMLInputElement, lastName: HTMLInputElement,
-            organization: HTMLInputElement, email: HTMLInputElement,
-            phone: HTMLInputElement): boolean {
+            organization: HTMLInputElement, position: HTMLInputElement,
+            email: HTMLInputElement,
+            phone: HTMLInputElement,
+            address: HTMLInputElement): boolean {
       let businessCard = {
                           firstName: firstName.value,
                           lastName: lastName.value,
                           organization: organization.value,
+                          position: position.value,
                           email: email.value,
-                          phone: phone.value
+                          phone: phone.value,
+                          address: address.value
                       };
       this.card = businessCard;
       this.appService.addCard(businessCard);

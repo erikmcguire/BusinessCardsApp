@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'business-cards-app';
+
+  constructor() {
+  }
+  public ngOnInit(): void {
+
+  }
 }

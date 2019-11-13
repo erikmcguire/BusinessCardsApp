@@ -1,0 +1,14 @@
+<div id="webcam">
+    <div>
+        <video id="video" width="640" height="480" autoplay #video></video>
+    </div>
+    <div>
+        <button id="snap" (click)="snap()">Snap Photo</button>
+    </div>
+    <canvas id="canvas" width="640" height="480" #canvas ></canvas>
+    <ul>
+        <li *ngIf="photo">
+            <img src="{{ photo.src }}"/>
+        </li>
+    </ul>
+</div>

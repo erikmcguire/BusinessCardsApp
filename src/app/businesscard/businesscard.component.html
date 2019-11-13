@@ -1,10 +1,12 @@
 <div class="cards">
     <ul>
-        <li>{{card.firstName}}</li>
-        <li>{{card.lastName}}</li>
-        <li>{{card.organization}}</li>
-        <li>{{card.email}}</li>
-        <li>{{card.phone}}</li>
+        <li>First Name: {{card.firstName}}</li>
+        <li>Last Name: {{card.lastName}}</li>
+        <li>Organization: {{card.organization}}</li>
+        <li>Position: {{card.position}}</li>
+        <li>Email: {{card.email}}</li>
+        <li>Phone: {{card.phone}}</li>
+        <li>Address: {{card.address}}</li>
     </ul>
     <button class="btn btn-danger" (click)="deleteCard(card)">
   <i class="fa fa-remove">Delete</i>

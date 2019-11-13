@@ -6,4 +6,12 @@
           <app-businesscard [card]="card"></app-businesscard>
       </li>
   </ul>
+  <div class="img">
+          <img [src]="imgService.localImg" id="image" />
+          <div>
+            <button (click)="imgService.convertToBase64()"> Base 64 </button>
+            <button (click)="imgService.scanCard()"> Scan </button>
+          </div>
+      </div>
+      <app-webcam></app-webcam>
 </div>

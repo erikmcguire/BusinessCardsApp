@@ -3,8 +3,6 @@ import { Card } from "./card.model";
 import { config } from './app.config';
 import { AngularFirestoreCollection, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { BusinesscardComponent } from './businesscard/businesscard.component';
-import { Observable } from 'rxjs';
-import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'

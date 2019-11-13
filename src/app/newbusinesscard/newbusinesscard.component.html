@@ -14,6 +14,10 @@
         <input name="organization" id="organization" #organization>
     </div>
     <div class="field">
+        <label for="position">Position: </label>
+        <input name="position" id="position" #position>
+    </div>
+    <div class="field">
         <label for="email">Email: </label>
         <input name="email" id="email" #email>
     </div>
@@ -21,7 +25,11 @@
         <label for="phone">Phone: </label>
         <input name="phone" id="phone" #phone>
     </div>
-    <button (click)="addCard(firstName, lastName, organization, email, phone)"
+    <div class="field">
+        <label for="address">Address: </label>
+        <input name="address" id="address" #address>
+    </div>
+    <button (click)="addCard(firstName, lastName, organization, position, email, phone, address)"
             class="ui positive right button">
         Submit Card
     </button>
