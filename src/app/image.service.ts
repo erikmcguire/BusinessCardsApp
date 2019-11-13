@@ -35,7 +35,7 @@ export class ImageService {
         this.http.post(url, request).subscribe( (results: any) => {
             console.log('Full Text Annotation from Remote');
             console.log(results.json().responses[0].fullTextAnnotation.text);
-            });
+            this.getEntities(results.json().responses[0].fullTextAnnotation.text);});
         } else if (image64) {
             const request: any = {
                     'requests': [{
@@ -60,4 +60,18 @@ export class ImageService {
       }
   }
 
+  getEntities(text: string) {
+      const url = 'https://language.googleapis.com/v1/documents:analyzeEntities?key=' + environment.cloudVision;
+      const request: any = {
+             "encodingType": "UTF8",
+             "document":
+             {
+             "type": "PLAIN_TEXT",
+             "content": text
+             }
+         }
+      this.http.post(url, request).subscribe( (results: any) => {
+            console.log(results.json());
+            });
+  }
 }

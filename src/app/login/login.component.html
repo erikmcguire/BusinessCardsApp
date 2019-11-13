@@ -1,25 +1,23 @@
-<h2>Login</h2>
+<h3>Login</h3>
 
-<form class="form-inline well" *ngIf="!authService.getUser() else elseBlock">
+<form class="form-horizontal" style="width: 50%" *ngIf="!authService.getUser() else elseBlock" >
 
   <div class="form-group">
     <label for="username">&nbsp; Email: &nbsp;</label>
-    <input class="form-control" name="username" #email
+    <input matInput class="form-control" name="username" placeholder="Email" #email
     (keyup.enter)="authService.login(email.value, password.value)">
   </div>
 
   <div class="form-group">
     <label for="password">&nbsp; Password: &nbsp;</label>
-    <input class="form-control" type="password" name="password" #password      (keyup.enter)="authService.login(email.value, password.value)"
+    <input class="form-control" type="password" name="password"  placeholder="Password" #password      (keyup.enter)="authService.login(email.value, password.value)"
 >
-  </div>
-    &nbsp;
-
+<br>
   <a class="btn btn-default"
      (click)="authService.login(email.value, password.value)">
      Submit
   </a>
-
+</div>
 </form>
 
 <ng-template #elseBlock>

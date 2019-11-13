@@ -18,7 +18,6 @@ import { HttpModule } from '@angular/http';
 import { WebcamComponent } from './webcam/webcam.component';
 import { FormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [
     AppComponent,

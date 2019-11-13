@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
+import { ImageService } from '../image.service';
 
 @Component({
   selector: 'app-newbusinesscard',
@@ -8,7 +9,7 @@ import { AppService } from '../app.service';
 })
 export class NewbusinesscardComponent implements OnInit {
     card: any;
-    constructor(private appService: AppService) {
+    constructor(private appService: AppService, private imgService: ImageService) {
     }
 
     addCard(firstName: HTMLInputElement, lastName: HTMLInputElement,
@@ -32,5 +33,5 @@ export class NewbusinesscardComponent implements OnInit {
 
     ngOnInit() {
     }
-
+    // this.imgService.getEntities();
 }
