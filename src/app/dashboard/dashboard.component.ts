@@ -14,9 +14,13 @@ import { ImageService } from '../image.service';
 })
 export class DashboardComponent implements OnInit {
   cards: Observable<any[]>;
+  private addToggle = false;
   constructor(private appService: AppService, private afs: AngularFirestore,
               private imgService: ImageService) { }
 
+  toggleAdd() {
+      this.addToggle = !this.addToggle;
+  }
   ngOnInit() {
       this.cards = this.afs
         .collection(config.collection_endpoint)
@@ -37,7 +41,7 @@ export class DashboardComponent implements OnInit {
           })
         );
   }
- 
+
 
 
 

@@ -1,17 +1,17 @@
 <h3>Business Cards</h3>
 <div class="grid grid-pad">
-  <app-newbusinesscard (onAdd)="addCard($event)"></app-newbusinesscard>
-  <ul>
-      <li *ngFor="let card of cards | async" class="col-1-4">
-          <app-businesscard [card]="card"></app-businesscard>
-      </li>
+    <button (click)="toggleAdd()"> Add a card </button>
+  <app-newbusinesscard *ngIf="addToggle" (onAdd)="addCard($event)"></app-newbusinesscard>
+  <ul *ngFor="let card of cards | async" class="col-1-4">
+      <app-businesscard [card]="card"></app-businesscard>
   </ul>
+
   <div class="img">
           <img [src]="imgService.localImg" id="image" />
           <div>
             <button (click)="imgService.convertToBase64()"> Base 64 </button>
             <button (click)="imgService.scanCard()"> Scan </button>
           </div>
-      </div>
-      <app-webcam></app-webcam>
+  </div>
+  <app-webcam></app-webcam>
 </div>

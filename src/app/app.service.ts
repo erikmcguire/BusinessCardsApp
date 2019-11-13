@@ -21,6 +21,11 @@ export class AppService implements OnInit {
      this.cards.add(card);
   }
 
+  updateCard(id: string, card) {
+       this.cardDoc = this.afs.doc<Card>(`${config.collection_endpoint}/${id}`);
+       this.cardDoc.update(card);
+    }
+
   deleteCard(id: string) {
      this.cardDoc = this.afs.doc<Card>(`${config.collection_endpoint}/${id}`);
      this.cardDoc.delete();
