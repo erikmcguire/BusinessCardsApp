@@ -2,12 +2,12 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from  "@angular/fire/auth";
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-
+declare var gtag;
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService implements OnDestroy {
-    asubscription: Subscription;
+  asubscription: Subscription;
   constructor(public afAuth: AngularFireAuth, private router: Router) {
       this.asubscription = this.afAuth.authState.subscribe(user => {
         if (user)
@@ -17,6 +17,7 @@ export class AuthService implements OnDestroy {
       }) }
 
   login(email: string, password: string) {
+
     return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
