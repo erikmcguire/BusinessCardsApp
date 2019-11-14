@@ -2,17 +2,17 @@
 <div class="grid grid-pad">
     <div class="form-group">
       <input matInput class="form-control" name="search" placeholder="First Name" #firstName
-      (keyup.enter)="appService.searchCards('firstName', firstName.value)">
+      (keyup.enter)="searchCards('firstName', firstName.value)">
       <button class="btn btn-default" name="search"
-         (click)="appService.searchCards('firstName', firstName.value)">
+         (click)="searchCards('firstName', firstName.value)">
          Search
       </button>
     </div>
     <div class="form-group">
       <input matInput class="form-control" name="search" placeholder="Organization" #organization
-      (keyup.enter)="appService.searchCards('organization', organization.value)">
+      (keyup.enter)="searchCards('organization', organization.value)">
       <button class="btn btn-default" name="search"
-         (click)="appService.searchCards('organization', organization.value)">
+         (click)="searchCards('organization', organization.value)">
          Search
       </button>
     </div>

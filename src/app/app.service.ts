@@ -15,7 +15,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 
-export class AppService implements OnInit, OnDestroy {
+export class AppService implements OnInit {
   cards: AngularFirestoreCollection<Card>;
   businessCard: BusinesscardComponent;
   private cardDoc: AngularFirestoreDocument<Card>;
@@ -27,28 +27,10 @@ export class AppService implements OnInit, OnDestroy {
   }
 
   addCard(card: any) {
+      console.log(card);
      this.cards.add(card);
   }
 
-  searchCards(t, query) {
-      const q$ = new Subject<string>();
-      const queryObservable = q$.pipe(
-       switchMap(q =>
-         this.afs.collection(config.collection_endpoint, ref => ref.where("author", "==", JSON.parse(this.authService.getUser()).uid).where(t, '==', q)).valueChanges()
-       )
-     );
-
-     this.qsubscription = queryObservable.subscribe((queriedItems: any) => {
-       if (t == 'firstName' && queriedItems[0]) {
-       console.log(queriedItems[0].firstName);
-   } else if (t == 'organization' && queriedItems[0]) {
-       console.log(queriedItems[0].organization);
-   }
-     });
-
-
-     q$.next(query);
-}
   updateCard(id: string, card) {
        this.cardDoc = this.afs.doc<Card>(`${config.collection_endpoint}/${id}`);
        this.cardDoc.update(card);
@@ -62,7 +44,4 @@ export class AppService implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  ngOnDestroy() {
-      this.qsubscription.unsubscribe();
-  }
 }
