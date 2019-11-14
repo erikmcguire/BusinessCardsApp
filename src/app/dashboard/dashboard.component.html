@@ -1,3 +1,4 @@
+
 <h3>Business Cards</h3>
 <div class="grid grid-pad">
     <div class="form-group">
@@ -28,14 +29,14 @@
             <button (click)="imgService.convertToBase64()"> Base 64 </button>
             <div class="radio">
                 <label>
-                    <input type="radio" [checked]="imgService.save" (change)="imgService.toggleSave()">
+                    <input type="radio" [checked]="imgService.saveb" (change)="imgService.toggleSave('b')">
                     &nbsp; Save PNG
                 </label>
             </div>
-            <button (click)="imgService.scanCard()"> Scan </button>
+            <button (click)="imgService.scanCard('s')"> Scan </button>
             <div class="radio">
                 <label>
-                    <input type="radio" [checked]="imgService.save" (change)="imgService.toggleSave()">
+                    <input type="radio" [checked]="imgService.saves" (change)="imgService.toggleSave('s')">
                     &nbsp; Save PNG
                 </label>
             </div>

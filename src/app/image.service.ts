@@ -13,17 +13,20 @@ export class ImageService implements OnDestroy {
     localImg = 'assets/images/bateman.png';
     remoteImg = 'https://i.pinimg.com/originals/26/b6/84/26b684bb28d44c7da4d83596ebd424a6.png';
     base64: string;
-    save: boolean = false;
+    saveb: boolean = false;
+    saves: boolean = false;
     hsubscription: Subscription;
     esubscription: Subscription;
 
-  constructor(public http: Http, private authService: AuthService, private appService: AppService) { }
+  constructor(public http: Http, private authService: AuthService,
+              private appService: AppService) { }
+
   convertToBase64() {
      const imgNode = document.getElementById(`image`);
      domtoimage.toPng(imgNode)
                      .then( (dataUrl: string) => {
-                             if (this.save) {
-                                this.saveImg(dataUrl);
+                             if (this.saveb) {
+                                this.saveImg(dataUrl, 'b');
                              }
                              this.base64 = dataUrl;
                       }).catch( (e: any) => {
@@ -31,8 +34,8 @@ export class ImageService implements OnDestroy {
                             });
    }
 
-    saveImg(dataUrl) {
-        this.toggleSave();
+    saveImg(dataUrl, t) {
+        this.toggleSave(t);
         let link = document.createElement('a');
         link.download = `snapshot${new Date()
                                    .getTime()}.png`;
@@ -40,12 +43,17 @@ export class ImageService implements OnDestroy {
         link.click();
     }
 
-  toggleSave() {
-      this.save = !this.save;
+  toggleSave(t) {
+      if (t === 'b') {
+        this.saveb = !this.saveb;
+    } else if (t === 's') {
+        this.saves = !this.saves;
+    }
   }
-  scanCard(image64?: string) {
-      if (this.save && !this.base64 && image64) {
-         this.saveImg(image64);
+
+  scanCard(image64?: string, t?: string) {
+      if (this.saves && !this.base64 && image64) {
+         this.saveImg(image64, t);
       }
       if (!this.base64 && !image64) {
           const request: any = {

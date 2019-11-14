@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
+declare var gtag;
 
 @Component({
   selector: 'app-root',
@@ -7,8 +10,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'business-cards-app';
-
   constructor() {
+        gtag('config', environment.firebase.measurementId);
   }
   public ngOnInit(): void {
 

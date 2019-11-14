@@ -7,7 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ImageService } from '../image.service';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
-
+declare var gtag;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   searchCards(t, query): boolean {
+      gtag("event", "search", {search_term: query})
       const queryObservable = this.afs.collection(
                             config.collection_endpoint,
                             ref => ref.where("author", "==",
@@ -43,7 +44,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return false;
  }
   ngOnInit() {
-
+      if (!this.authService.isLoggedIn()) {
+          gtag('event', 'login', { method : 'Email w/ Pass' });
+      }
       this.cards = this.afs
         .collection(config.collection_endpoint, ref => ref.where("author", "==", JSON.parse(this.authService.getUser()).uid))
         .snapshotChanges()
@@ -59,6 +62,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-      this.qsubscription.unsubscribe();
+      if (this.qsubscription) {
+          this.qsubscription.unsubscribe();
+      }
   }
 }
