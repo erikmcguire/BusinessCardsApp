@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 import { ImageService } from '../image.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-newbusinesscard',
@@ -9,7 +10,9 @@ import { ImageService } from '../image.service';
 })
 export class NewbusinesscardComponent implements OnInit {
     card: any;
-    constructor(private appService: AppService, private imgService: ImageService) {
+    constructor(private appService: AppService,
+                private imgService: ImageService,
+                private authService: AuthService) {
     }
 
     addCard(firstName: HTMLInputElement, lastName: HTMLInputElement,
@@ -24,7 +27,8 @@ export class NewbusinesscardComponent implements OnInit {
                           position: position.value,
                           email: email.value,
                           phone: phone.value,
-                          address: address.value
+                          address: address.value,
+                          author: this.authService.afAuth.auth.currentUser.uid
                       };
       this.card = businessCard;
       this.appService.addCard(businessCard);

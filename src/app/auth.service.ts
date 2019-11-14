@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from  "@angular/fire/auth";
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
+    asubscription: Subscription;
 
   constructor(public afAuth: AngularFireAuth) {
-      this.afAuth.authState.subscribe(user => {
+      this.asubscription = this.afAuth.authState.subscribe(user => {
         if (user)
-          {
+          {     
             localStorage.setItem('user', JSON.stringify(user));
           }
       }) }
@@ -35,4 +37,7 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.getUser() !== null;
 }
+  ngOnDestroy() {
+      this.asubscription.unsubscribe();
+  }
 }

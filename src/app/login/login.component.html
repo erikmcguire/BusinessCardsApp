@@ -3,13 +3,11 @@
 <form class="form-horizontal" style="width: 50%" *ngIf="!authService.getUser() else elseBlock" >
 
   <div class="form-group">
-    <label for="username">&nbsp; Email: &nbsp;</label>
     <input matInput class="form-control" name="username" placeholder="Email" #email
     (keyup.enter)="authService.login(email.value, password.value)">
   </div>
 
   <div class="form-group">
-    <label for="password">&nbsp; Password: &nbsp;</label>
     <input class="form-control" type="password" name="password"  placeholder="Password" #password      (keyup.enter)="authService.login(email.value, password.value)"
 >
 <br>

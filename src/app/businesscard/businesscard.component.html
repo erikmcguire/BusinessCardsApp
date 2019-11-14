@@ -12,43 +12,36 @@
       <form  #f="ngForm">
         <div class="form-group">
             <div class="field">
-                <label for="name">First Name: </label>
-                <input name="firstName" id="firstName" [(ngModel)]="card.firstName">
+                <input name="firstName" id="firstName" placeholder="{{getValue(card.firstName, 'First Name')}}" #firstName>
             </div>
             <div class="field">
-                <label for="description">Last Name: </label>
-                <input name="lastName" id="lastName" [(ngModel)]="card.lastName">
+                <input name="lastName" id="lastName" placeholder="{{getValue(card.lastName, 'Last Name')}}" #lastName>
             </div>
             <div class="field">
-                <label for="organization">Organization: </label>
-                <input name="organization" id="organization" [(ngModel)]="card.organization">
+                <input name="organization" id="organization" #organization placeholder="{{getValue(card.organization, 'Organization')}}">
             </div>
             <div class="field">
-                <label for="position">Position: </label>
-                <input name="position" id="position" [(ngModel)]="card.position">
+                <input name="position" id="position" placeholder="{{getValue(card.position, 'Position')}}" #position>
             </div>
             <div class="field">
-                <label for="email">Email: </label>
-                <input name="email" id="email" [(ngModel)]="card.email">
+                <input name="email" id="email" #email placeholder="{{getValue(card.email, 'Email')}}">
             </div>
             <div class="field">
-                <label for="phone">Phone: </label>
-                <input name="phone" id="phone" [(ngModel)]="card.phone">
+                <input name="phone" id="phone" placeholder="{{getValue(card.phone, 'Phone')}}" #phone>
             </div>
             <div class="field">
-                <label for="address">Address: </label>
-                <input name="address" id="address" [(ngModel)]="card.address">
+                <input name="address" id="address" placeholder="{{getValue(card.address, 'Address')}}" #address>
             </div>
         </div>
         <div class="form-group">
-          <button class="btn btn-primary" [disabled]="!f.valid" (click)="saveCard()">
+          <button class="btn btn-primary" [disabled]="!f.valid" (click)="saveCard(firstName, lastName, organization, position, email, phone, address)">
             Save Card
           </button>
         </div>
       </form>
     </div>
     <ng-template #elseBlock>
-    <button class="btn btn-success" (click)="edit(card, firstName, lastName, organization, position, email, phone, address)">
+    <button class="btn btn-success" (click)="edit(card)">
         <i class="fa fa-edit">Edit</i>
     </button>
     <button class="btn btn-danger" (click)="deleteCard(card)">
