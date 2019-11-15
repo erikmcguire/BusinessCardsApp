@@ -1,3 +1,7 @@
 .img {
     text-align: center;
 }
+
+#dashboard {
+    display: flex;
+}

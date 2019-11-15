@@ -1,4 +1,13 @@
 /* DashboardComponent's private CSS styles */
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+.centerd {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
 [class*='col-'] {
   float: left;
   padding-right: 20px;

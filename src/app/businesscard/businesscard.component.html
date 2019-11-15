@@ -1,13 +1,19 @@
+<ul *ngFor="let card of cards | async" class="col-1-4">
+    <br><mat-card *ngIf="saved">
+        <mat-card-content>
+        <mat-list>
+        <mat-list-item>First Name: {{card.firstName}}</mat-list-item><mat-divider></mat-divider>
+        <mat-list-item>Last Name: {{card.lastName}}</mat-list-item><mat-divider></mat-divider>
+        <mat-list-item>Organization: {{card.organization}}</mat-list-item><mat-divider></mat-divider>
+        <mat-list-item>Position: {{card.position}}</mat-list-item><mat-divider></mat-divider>
+        <mat-list-item><mat-icon matPrefix>email</mat-icon>&nbsp; Email: {{card.email}}</mat-list-item><mat-divider></mat-divider>
+        <mat-list-item><mat-icon matPrefix>phone</mat-icon>&nbsp; Phone: {{card.phone}} </mat-list-item><mat-divider></mat-divider>
+        <mat-list-item><mat-icon matPrefix>house</mat-icon>&nbsp; Address: {{card.address}}</mat-list-item>
+        </mat-list>
+        </mat-card-content>
+    </mat-card><br>
+</ul>
 <div class="cards">
-    <div class="well" *ngIf="saved">
-        <li>First Name: {{card.firstName}}</li>
-        <li>Last Name: {{card.lastName}}</li>
-        <li>Organization: {{card.organization}}</li>
-        <li>Position: {{card.position}}</li>
-        <li>Email: {{card.email}}</li>
-        <li>Phone: {{card.phone}}</li>
-        <li>Address: {{card.address}}</li>
-    </div>
     <div class="col-md-6" *ngIf="editMode else elseBlock">
       <form  #f="ngForm">
         <div class="form-group">
@@ -41,11 +47,12 @@
       </form>
     </div>
     <ng-template #elseBlock>
-    <button class="btn btn-success" (click)="edit(card)">
+        <button mat-button class="btn-danger" style="float: right;" (click)="deleteCard(card)">
+            <i class="fa fa-remove">Delete</i>
+        </button>
+    <button mat-button style="background-color: lightgreen; float: right; margin-right: 10px;" (click)="edit(card)">
         <i class="fa fa-edit">Edit</i>
-    </button>
-    <button class="btn btn-danger" (click)="deleteCard(card)">
-        <i class="fa fa-remove">Delete</i>
-    </button>
+    </button>&nbsp;
+
     </ng-template>
 </div>

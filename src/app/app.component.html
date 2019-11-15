@@ -1,6 +1,12 @@
-<div class="container">
-    <nav>
-        <li><a routerLink="/login" routerLinkActive="active">Dashboard</a></li>
-    </nav>
-    <router-outlet></router-outlet>
+<mat-toolbar color="secondary">
+    <mat-toolbar-row>
+    <div id="dashboard">
+        <a mat-button routerLink="/login" routerLinkActive="active"><mat-icon class="icon">exit_to_app</mat-icon> Log in/out</a>
+        <a mat-button routerLink="/dashboard" routerLinkActive="active"><mat-icon class="icon">dashboard</mat-icon> Dashboard</a>
+        <a mat-button routerLink="/search" routerLinkActive="active"><mat-icon class="icon">search</mat-icon> Search</a>
+        <a mat-button routerLink="/webcam" routerLinkActive="active"><mat-icon class="icon">camera</mat-icon> Scan</a>
+        <a mat-button routerLink="/card" routerLinkActive="active"><mat-icon class="icon">person_add</mat-icon> Contacts</a>
     </div>
+    </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="container"><router-outlet></router-outlet></div>

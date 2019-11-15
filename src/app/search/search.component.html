@@ -1,0 +1,22 @@
+<br><div class="example-container">
+  <mat-card>
+      <mat-form-field><mat-icon matPrefix>search</mat-icon>
+          <input matInput name="search" placeholder="First Name" #firstName
+  (keyup.enter)="searchCards('firstName', firstName.value)">
+  </mat-form-field>
+  <button mat-button class="btn btn-default" color="primary" name="search"
+     (click)="searchCards('firstName', firstName.value)">
+     Submit
+  </button>
+  </mat-card><br>
+    <mat-card>
+<mat-form-field><mat-icon matPrefix>search</mat-icon>
+  <input matInput name="search" placeholder="Organization" #organization
+  (keyup.enter)="searchCards('organization', organization.value)">
+  </mat-form-field>
+  <button mat-button class="btn btn-default" color="accent" name="search"
+     (click)="searchCards('organization', organization.value)">
+     Submit
+  </button>
+    </mat-card>
+</div>

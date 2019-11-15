@@ -1,4 +1,23 @@
 <div id="webcam">
+    <div class="img">
+            <img [src]="imgService.localImg" id="image" />
+            <div>
+              <button (click)="imgService.convertToBase64()"> Base 64 </button>
+              <div class="radio">
+                  <label>
+                      <input type="radio" [checked]="imgService.saveb" (change)="imgService.toggleSave('b')">
+                      &nbsp; Save PNG
+                  </label>
+              </div>
+              <button (click)="imgService.scanCard('s')"> Scan </button>
+              <div class="radio">
+                  <label>
+                      <input type="radio" [checked]="imgService.saves" (change)="imgService.toggleSave('s')">
+                      &nbsp; Save PNG
+                  </label>
+              </div>
+            </div>
+    </div>
     <div>
         <video id="video" width="640" height="480" autoplay #video></video>
     </div>

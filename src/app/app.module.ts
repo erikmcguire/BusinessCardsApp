@@ -17,6 +17,10 @@ import { BusinesscardComponent }
 import { HttpModule } from '@angular/http';
 import { WebcamComponent } from './webcam/webcam.component';
 import { FormsModule } from '@angular/forms';
+import { MatToolbarModule, MatCardModule, MatInputModule, MatIconModule, MatListModule, MatButtonModule } from  '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { SearchComponent } from './search/search.component';
+
 
 @NgModule({
   declarations: [
@@ -26,10 +30,18 @@ import { FormsModule } from '@angular/forms';
     NotFoundComponent,
     NewbusinesscardComponent,
     BusinesscardComponent,
-    WebcamComponent
+    WebcamComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatInputModule,
+    MatCardModule,
+    MatListModule,
+    MatButtonModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase,
                                     'business-cards-app'),
@@ -40,7 +52,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [DashboardComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

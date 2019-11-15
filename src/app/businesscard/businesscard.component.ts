@@ -2,6 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Card } from "../card.model";
 import { AppService } from '../app.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { config } from '../app.config';
+import { map } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from '../auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-businesscard',
@@ -14,7 +19,10 @@ export class BusinesscardComponent implements OnInit {
   editMode: boolean = false;
   cardToEdit: any = {};
   saved: boolean = true;
-  constructor(private appService: AppService, public dbc: DashboardComponent) { }
+  cards: Observable<any[]>;
+  constructor(private appService: AppService, public dbc: DashboardComponent,
+      private authService: AuthService,
+                  private afs: AngularFirestore) { }
 
   edit(card: Card) {
     this.cardToEdit = card;
@@ -67,6 +75,19 @@ export class BusinesscardComponent implements OnInit {
   }
 
   ngOnInit() {
+      this.cards = this.afs
+        .collection(config.collection_endpoint, ref => ref.where("author", "==", JSON.parse(this.authService.getUser()).uid))
+        .snapshotChanges()
+        .pipe(
+               map(actions => {
+                   return actions.map(a => {
+                   const data = a.payload.doc.data() as Card;
+                   const id = a.payload.doc.id;
+                   return { id, ...data };
+               });
+          })
+        );
   }
+
 
 }
