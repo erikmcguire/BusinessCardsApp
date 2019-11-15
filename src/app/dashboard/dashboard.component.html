@@ -1,5 +1,5 @@
-<br>
-<div class="centerd example-container">
-<button mat-button-toggle (click)="toggleAdd()"><mat-icon>person_add</mat-icon> Add a card </button>
-  <app-newbusinesscard *ngIf="addToggle" (onAdd)="addCard($event)"></app-newbusinesscard>
+<div class="centerd example-container" style="margin-top: 10%;">
+<button mat-button-toggle class="mat-elevation-z2" (click)="toggleAdd()"><mat-icon matPrefix>person_add</mat-icon>Add a card</button>
+  <app-newbusinesscard *ngIf="addToggle" (onAdd)="addCard($event)">
+  </app-newbusinesscard>
 </div>
