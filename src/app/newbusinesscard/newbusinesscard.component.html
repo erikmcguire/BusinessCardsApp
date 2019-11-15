@@ -1,4 +1,12 @@
-<form class="example-form centerd">
+<div class="centerd example-container" style="margin-top: 10%;" >
+<button mat-button-toggle class="mat-elevation-z2" (click)="toggleAdd()">
+    <mat-icon matPrefix>
+        person_add
+    </mat-icon>
+        Add a card
+</button>
+
+<form class="example-form centerd" *ngIf="addToggle" (onAdd)="addCard($event)">
     <mat-card>
         <mat-form-field>
         <input matInput name="firstName" placeholder="First Name" id="firstName" #firstName>

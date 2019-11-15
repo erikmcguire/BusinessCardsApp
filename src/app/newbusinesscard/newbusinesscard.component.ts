@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
 })
 export class NewbusinesscardComponent implements OnInit {
     card: any;
+    public addToggle = false;
     constructor(private appService: AppService,
                 private imgService: ImageService,
                 private authService: AuthService) {
@@ -33,6 +34,10 @@ export class NewbusinesscardComponent implements OnInit {
       this.card = businessCard;
       this.appService.addCard(businessCard);
       return false;
+      }
+
+      toggleAdd() {
+          this.addToggle = !this.addToggle;
       }
 
     ngOnInit() {

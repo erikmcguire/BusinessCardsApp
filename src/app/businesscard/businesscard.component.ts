@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Card } from "../card.model";
 import { AppService } from '../app.service';
-import { DashboardComponent } from '../dashboard/dashboard.component';
 import { config } from '../app.config';
 import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../auth.service';
 import { Observable } from 'rxjs';
+import { NewbusinesscardComponent } from '../newbusinesscard/newbusinesscard.component';
 
 @Component({
   selector: 'app-businesscard',
@@ -20,7 +20,8 @@ export class BusinesscardComponent implements OnInit {
   cardToEdit: any = {};
   saved: boolean = true;
   cards: Observable<any[]>;
-  constructor(private appService: AppService, public dbc: DashboardComponent,
+  constructor(private appService: AppService,
+              public dbc: NewbusinesscardComponent,
       private authService: AuthService,
                   private afs: AngularFirestore) { }
 

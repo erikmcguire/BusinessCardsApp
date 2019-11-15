@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NewbusinesscardComponent }
          from './newbusinesscard/newbusinesscard.component';
@@ -17,7 +16,9 @@ import { BusinesscardComponent }
 import { HttpModule } from '@angular/http';
 import { WebcamComponent } from './webcam/webcam.component';
 import { FormsModule } from '@angular/forms';
-import { MatToolbarModule, MatCardModule, MatInputModule, MatIconModule, MatListModule, MatButtonModule } from  '@angular/material';
+import { MatToolbarModule, MatCardModule,
+         MatInputModule, MatIconModule,
+         MatListModule, MatButtonModule } from  '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { SearchComponent } from './search/search.component';
 
@@ -26,7 +27,6 @@ import { SearchComponent } from './search/search.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent,
     NotFoundComponent,
     NewbusinesscardComponent,
     BusinesscardComponent,
@@ -52,7 +52,7 @@ import { SearchComponent } from './search/search.component';
     FormsModule,
     HttpModule
   ],
-  providers: [DashboardComponent],
+  providers: [NewbusinesscardComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
