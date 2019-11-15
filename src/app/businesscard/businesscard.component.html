@@ -2,6 +2,7 @@
     <ul *ngFor="let card of cards | async | reverse" class="col-1-4" style="margin-top: 10%;">
     <br><mat-card *ngIf="saved">
         <mat-card-content>
+        <img mat-card-image src="{{displayCardImg(card)}}" id="image"/>
         <mat-list>
         <mat-list-item>First Name: {{card.firstName}}</mat-list-item><mat-divider></mat-divider>
         <mat-list-item>Last Name: {{card.lastName}}</mat-list-item><mat-divider></mat-divider>

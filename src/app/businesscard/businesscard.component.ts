@@ -20,7 +20,7 @@ export class BusinesscardComponent implements OnInit {
   saved: boolean = true;
   cards: Observable<any[]>;
   constructor(private appService: AppService,
-      private authService: AuthService, 
+      private authService: AuthService,
                   private afs: AngularFirestore) { }
 
   edit(card: Card) {
@@ -29,7 +29,11 @@ export class BusinesscardComponent implements OnInit {
     this.myCard = card;
     this.saved = false;
   }
-
+  displayCardImg(card) {
+      if (card.imageUri) {
+          return card.imageUri;
+      } else return "";
+  }
   cancelEdit() {
       this.editMode = false;
       this.saved = true;

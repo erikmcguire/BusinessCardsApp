@@ -11,6 +11,7 @@ export class Card {
    address: string;
    author: string;
    addedAt: Date;
+   imageUri: string;
 
    constructor(obj?: any) {
     this.id              = obj && obj.id              || null;
@@ -23,5 +24,6 @@ export class Card {
     this.address         = obj && obj.address         || null;
     this.author          = obj && obj.author          || null;
     this.addedAt         = obj && obj.addedAt         || null;
+    this.imageUri        = obj && obj.imageUri        || null;
 }
  }

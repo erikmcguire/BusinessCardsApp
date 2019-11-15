@@ -5,7 +5,7 @@ import domtoimage from 'dom-to-image';
 import { Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
 import { AppService } from './app.service';
-import { Card } from './card.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -55,7 +55,7 @@ export class ImageService implements OnDestroy {
       if (this.saves && !this.base64 && image64) {
          this.saveImg(image64, t);
       }
-      if (!this.base64 && !image64) {
+      if (!this.base64 && image64 == 's') {
           const request: any = {
               'requests': [
                   {'image': {
@@ -70,7 +70,7 @@ export class ImageService implements OnDestroy {
             console.log(results.json().responses[0].fullTextAnnotation.text);
             this.getEntities(results.json().responses[0].fullTextAnnotation.text);
         });
-        } else if (image64) {
+    } else if (image64 && image64.length >= 2) {
             const request: any = {
                     'requests': [{
                         'image': {
@@ -112,10 +112,13 @@ export class ImageService implements OnDestroy {
 
   }
 
+
   fillEnts(ents: any) {
     let businessCard: any = {};
+
     businessCard.author = this.authService.afAuth.auth.currentUser.uid;
     businessCard.addedAt = Date.now();
+    businessCard.imageUri = this.base64 || this.remoteImg;
     ents.forEach(el => {if (el.type === "PERSON")
                             { businessCard.firstName = el.name.split(" ")[0];
                               businessCard.lastName = el.name.split(" ")[1]
