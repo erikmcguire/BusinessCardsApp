@@ -8,7 +8,9 @@ import { ImageService } from '../image.service';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
 import { AuthGuard } from '../auth.guard';
+
 declare var gtag;
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -45,9 +47,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return false;
  }
   ngOnInit() {
-      if (this.authService.isLoggedIn()) {
-          gtag('event', 'login', {method: 'Email w/ Pass'});
-      }
       this.cards = this.afs
         .collection(config.collection_endpoint, ref => ref.where("author", "==", JSON.parse(this.authService.getUser()).uid))
         .snapshotChanges()

@@ -6,15 +6,15 @@
 
   <div class="form-group">
     <input matInput class="form-control" name="username" placeholder="Email" #email
-    (keyup.enter)="authService.login(email.value, password.value)">
+    (keyup.enter)="login(email.value, password.value)">
   </div>
 
   <div class="form-group">
-    <input class="form-control" type="password" name="password"  placeholder="Password" #password      (keyup.enter)="authService.login(email.value, password.value)"
+    <input class="form-control" type="password" name="password"  placeholder="Password" #password (keyup.enter)="login(email.value, password.value)"
 >
 <br>
   <a class="btn btn-default"
-     (click)="authService.login(email.value, password.value)">
+     (click)="login(email.value, password.value)">
      Submit
   </a>
 </div>
@@ -23,9 +23,9 @@
 <ng-template #elseBlock>
 
     <header class="well">
-        Logged in as <b>{{ authService.printUser() }}</b>
+        Logged in as <b>{{ printUser() }}</b>
         <br><br>
-        <a href (click)="authService.logout()">Log Out</a>
+        <a href (click)="logout()">Log Out</a>
     </header>
 
     <app-dashboard></app-dashboard>
