@@ -115,6 +115,7 @@ export class ImageService implements OnDestroy {
   fillEnts(ents: any) {
     let businessCard: any = {};
     businessCard.author = this.authService.afAuth.auth.currentUser.uid;
+    businessCard.addedAt = Date.now();
     ents.forEach(el => {if (el.type === "PERSON")
                             { businessCard.firstName = el.name.split(" ")[0];
                               businessCard.lastName = el.name.split(" ")[1]

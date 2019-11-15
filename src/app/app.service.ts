@@ -27,7 +27,6 @@ export class AppService implements OnInit {
   }
 
   addCard(card: any) {
-      console.log(card);
      this.cards.add(card);
   }
 

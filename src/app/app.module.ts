@@ -21,11 +21,13 @@ import { MatToolbarModule, MatCardModule,
          MatListModule, MatButtonModule } from  '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { SearchComponent } from './search/search.component';
+import { ReversePipe } from './businesscard/reverseCards.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    ReversePipe,
     LoginComponent,
     NotFoundComponent,
     NewbusinesscardComponent,
@@ -52,7 +54,7 @@ import { SearchComponent } from './search/search.component';
     FormsModule,
     HttpModule
   ],
-  providers: [NewbusinesscardComponent],
+  providers: [ReversePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

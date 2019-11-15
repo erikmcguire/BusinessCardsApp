@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../auth.service';
 import { Observable } from 'rxjs';
-import { NewbusinesscardComponent } from '../newbusinesscard/newbusinesscard.component';
 
 @Component({
   selector: 'app-businesscard',
@@ -21,8 +20,7 @@ export class BusinesscardComponent implements OnInit {
   saved: boolean = true;
   cards: Observable<any[]>;
   constructor(private appService: AppService,
-              public dbc: NewbusinesscardComponent,
-      private authService: AuthService,
+      private authService: AuthService, 
                   private afs: AngularFirestore) { }
 
   edit(card: Card) {
@@ -30,9 +28,12 @@ export class BusinesscardComponent implements OnInit {
     this.editMode = true;
     this.myCard = card;
     this.saved = false;
-    this.dbc.addToggle = false;
   }
 
+  cancelEdit() {
+      this.editMode = false;
+      this.saved = true;
+  }
   getValue(field, ph) {
       if (field && field.trim()) {
           return field;
@@ -68,7 +69,6 @@ export class BusinesscardComponent implements OnInit {
         this.saved = true;
         this.myCard  = "";
      }
-     this.dbc.toggleAdd();
      return false;
   }
 
@@ -79,7 +79,7 @@ export class BusinesscardComponent implements OnInit {
 
   ngOnInit() {
       this.cards = this.afs
-        .collection(config.collection_endpoint, ref => ref.where("author", "==", JSON.parse(this.authService.getUser()).uid))
+        .collection(config.collection_endpoint, ref => ref.where("author", "==", JSON.parse(this.authService.getUser()).uid).orderBy('addedAt'))
         .snapshotChanges()
         .pipe(
                map(actions => {
@@ -89,7 +89,7 @@ export class BusinesscardComponent implements OnInit {
                    return { id, ...data };
                });
           })
-        );
+      );
   }
 
 

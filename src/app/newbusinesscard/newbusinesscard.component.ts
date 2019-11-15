@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 import { ImageService } from '../image.service';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-newbusinesscard',
@@ -10,10 +11,11 @@ import { AuthService } from '../auth.service';
 })
 export class NewbusinesscardComponent implements OnInit {
     card: any;
-    public addToggle = false;
+
     constructor(private appService: AppService,
                 private imgService: ImageService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private router: Router) {
     }
 
     addCard(firstName: HTMLInputElement, lastName: HTMLInputElement,
@@ -29,15 +31,13 @@ export class NewbusinesscardComponent implements OnInit {
                           email: email.value,
                           phone: phone.value,
                           address: address.value,
-                          author: this.authService.afAuth.auth.currentUser.uid
+                          author: this.authService.afAuth.auth.currentUser.uid,
+                          addedAt: Date.now()
                       };
       this.card = businessCard;
       this.appService.addCard(businessCard);
+      this.router.navigate(['/card']);
       return false;
-      }
-
-      toggleAdd() {
-          this.addToggle = !this.addToggle;
       }
 
     ngOnInit() {

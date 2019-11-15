@@ -10,6 +10,7 @@ export class Card {
    phone: string;
    address: string;
    author: string;
+   addedAt: Date;
 
    constructor(obj?: any) {
     this.id              = obj && obj.id              || null;
@@ -21,5 +22,6 @@ export class Card {
     this.phone           = obj && obj.phone           || null;
     this.address         = obj && obj.address         || null;
     this.author          = obj && obj.author          || null;
+    this.addedAt         = obj && obj.addedAt         || null;
 }
  }
