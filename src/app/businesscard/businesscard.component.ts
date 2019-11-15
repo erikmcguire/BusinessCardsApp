@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./businesscard.component.css']
 })
 export class BusinesscardComponent implements OnInit {
-  @Input() card: Card;
+  @Input() card: Card = new Card();
   myCard: any = {};
   editMode: boolean = false;
   cardToEdit: any = {};
@@ -33,9 +33,11 @@ export class BusinesscardComponent implements OnInit {
   }
 
   getValue(field, ph) {
-      if (field.trim()) {
+      if (field && field.trim()) {
           return field;
-      } else return ph;
+      } else {
+       return ph;
+    }
   }
   saveCard(firstName: HTMLInputElement,
            lastName: HTMLInputElement,

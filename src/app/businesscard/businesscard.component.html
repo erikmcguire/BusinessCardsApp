@@ -1,4 +1,4 @@
-<ul *ngFor="let card of cards | async" class="col-1-4">
+<ul *ngFor="let card of cards | async" class="col-1-4" >
     <br><mat-card *ngIf="saved">
         <mat-card-content>
         <mat-list>
@@ -12,31 +12,39 @@
         </mat-list>
         </mat-card-content>
     </mat-card><br>
+    <div class="clearfix">
+    <button mat-button class="btn-danger " *ngIf="!editMode" style="float: right;" (click)="deleteCard(card)">
+        <i class="fa fa-remove">Delete</i>
+    </button>
+<button mat-button *ngIf="!editMode" style="background-color: lightgreen; float: right; margin-right: 10px;" (click)="edit(card)">
+    <i class="fa fa-edit">Edit</i>
+</button>
+</div>
 </ul>
 <div class="cards">
-    <div class="col-md-6" *ngIf="editMode else elseBlock">
+    <div class="col-md-6" *ngIf="editMode">
       <form  #f="ngForm">
         <div class="form-group">
             <div class="field">
-                <input name="firstName" id="firstName" placeholder="{{getValue(card.firstName, 'First Name')}}" #firstName>
+                <input name="firstName" id="firstName" placeholder="{{getValue(myCard.firstName, 'First Name')}}" #firstName>
             </div>
             <div class="field">
-                <input name="lastName" id="lastName" placeholder="{{getValue(card.lastName, 'Last Name')}}" #lastName>
+                <input name="lastName" id="lastName" placeholder="{{getValue(myCard.lastName, 'Last Name')}}" #lastName>
             </div>
             <div class="field">
-                <input name="organization" id="organization" #organization placeholder="{{getValue(card.organization, 'Organization')}}">
+                <input name="organization" id="organization" placeholder="{{getValue(myCard.organization, 'Organization')}}" #organization>
             </div>
             <div class="field">
-                <input name="position" id="position" placeholder="{{getValue(card.position, 'Position')}}" #position>
+                <input name="position" id="position" placeholder="{{getValue(myCard.position, 'Position')}}" #position>
             </div>
             <div class="field">
-                <input name="email" id="email" #email placeholder="{{getValue(card.email, 'Email')}}">
+                <input name="email" id="email" placeholder="{{getValue(myCard.email, 'Email')}}"  #email>
             </div>
             <div class="field">
-                <input name="phone" id="phone" placeholder="{{getValue(card.phone, 'Phone')}}" #phone>
+                <input name="phone" id="phone" placeholder="{{getValue(myCard.phone, 'Phone')}}" #phone>
             </div>
             <div class="field">
-                <input name="address" id="address" placeholder="{{getValue(card.address, 'Address')}}" #address>
+                <input name="address" id="address" placeholder="{{getValue(myCard.address, 'Address')}}" #address>
             </div>
         </div>
         <div class="form-group">
@@ -46,13 +54,4 @@
         </div>
       </form>
     </div>
-    <ng-template #elseBlock>
-        <button mat-button class="btn-danger" style="float: right;" (click)="deleteCard(card)">
-            <i class="fa fa-remove">Delete</i>
-        </button>
-    <button mat-button style="background-color: lightgreen; float: right; margin-right: 10px;" (click)="edit(card)">
-        <i class="fa fa-edit">Edit</i>
-    </button>&nbsp;
-
-    </ng-template>
 </div>
