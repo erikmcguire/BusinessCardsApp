@@ -1,9 +1,25 @@
-<div class="example-container centerd" style="margin-top: 10%;" >
-    <button mat-button id="snap" class="centerd" (click)="toggleCamera()">
-        Toggle Camera
-    </button>
+    <mat-card  style="margin-top: 10%;" >
+        <mat-card-subtitle>Optional: Use a local or remote image.</mat-card-subtitle>
+        <mat-card-content>
+            <mat-form-field style="width: 55%;">
+                <mat-label>Path (e.g., images/card.png or https://path/card.png).</mat-label>
+                <mat-icon class="icon" matPrefix>add_a_photo</mat-icon>
+                <input matInput name="image" #image
+        (keyup.enter)="setImage(image.value)">
+            </mat-form-field>
+<button mat-button color="primary" name="image"
+   (click)="setImage(image.value)">
+   <mat-icon class="icon" matPrefix>add_a_photo</mat-icon>
+   Submit
+</button>
+</mat-card-content>
+</mat-card>
+<div class="example-container centerd">
+<button mat-button id="snap" class="centerd" (click)="toggleCamera()">
+    Toggle Camera
+</button>
 </div>
-<div id="webcam" style="margin-top: 10%;">
+<div id="webcam">
     <div class="img">
             <img [src]="imgService.localImg" id="image" />
             <div class="centerd">
@@ -30,7 +46,7 @@
                 </mat-radio-group>
             </div>
     </div>
-    <div>
+    <div *ngIf="toggleCam">
         <video id="video" width="640" height="480" autoplay #video></video>
     </div>
     <div>

@@ -33,7 +33,7 @@ export class BusinesscardComponent implements OnInit {
   }
 
   displayCardImg(card) {
-      this.imgService.displayCardImg(card);
+      return this.imgService.displayCardImg(card);
   }
 
   cancelEdit() {

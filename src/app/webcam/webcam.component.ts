@@ -19,10 +19,16 @@ export class WebcamComponent implements OnInit {
     ngOnInit() {
     }
 
+    setImage(imageUri: string): boolean {
+        if (imageUri.search("http") != -1) {
+            this.imgService.remoteImg = imageUri;
+        } else {
+            this.imgService.localImg = imageUri;
+        }
+        return false;
+    }
     toggleCamera() {
         if (!this.toggleCam) {
-            let rc = document.getElementById('video')
-            rc.style.display = "none";
             this.toggleCam = true;
             this.video = document.querySelector('video');
             if (navigator.mediaDevices.getUserMedia) {
@@ -31,14 +37,11 @@ export class WebcamComponent implements OnInit {
                         this.video.srcObject = stream},
                         err => { console.log(err) });
             }
-        } else {
+        } else if (this.toggleCam) {
             this.toggleCam = false;
-            let rc = document.getElementById('webcam')
-            rc.style.display = "block";
             if (navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({video: true})
                 .then(stream => {
-                      this.video.srcObject = null;
                       stream.getTracks()[0].stop();
                      },
                     err => { console.log(err) });

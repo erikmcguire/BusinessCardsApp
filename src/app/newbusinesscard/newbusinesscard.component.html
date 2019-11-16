@@ -1,30 +1,30 @@
 <div class="centerd example-container" style="margin-top: 10%;" >
 
-<form class="example-form centerd" (onAdd)="addCard($event)">
+<form class="example-form centerd">
     <mat-card>
         <mat-form-field>
-        <input matInput name="firstName" placeholder="First Name" id="firstName" #firstName>
+        <input matInput name="firstName" placeholder="First Name" id="firstName" value="{{imgService.filledCard.firstName || ''}}" #firstName>
     </mat-form-field>
     <mat-form-field>
-        <input matInput name="lastName" placeholder="Last Name" id="lastName" #lastName>
+        <input matInput name="lastName" placeholder="Last Name" id="lastName" value="{{imgService.filledCard.lastName || ''}}" #lastName>
     </mat-form-field>
     <mat-form-field>
-        <input matInput name="organization" placeholder="Organization" id="organization" #organization>
+        <input matInput name="organization" placeholder="Organization" id="organization" value="{{imgService.filledCard.organization || ''}}" #organization>
     </mat-form-field>
     <mat-form-field>
-        <input matInput name="position" placeholder="Position" id="position" #position>
+        <input matInput name="position" placeholder="Position" id="position" value="{{imgService.filledCard.position || ''}}" #position>
     </mat-form-field>
     <mat-form-field>
-        <input matInput name="email" placeholder="Email" id="email" #email>
+        <input matInput name="email" placeholder="Email" id="email" value="{{imgService.filledCard.email || ''}}" #email>
     </mat-form-field>
     <mat-form-field>
-        <input matInput name="phone" placeholder="Phone" id="phone" #phone>
+        <input matInput name="phone" placeholder="Phone" id="phone" value="{{imgService.filledCard.phone || ''}}" #phone>
     </mat-form-field>
     <mat-form-field>
-        <input matInput name="address" placeholder="Address" id="address" #address>
+        <input matInput name="address" placeholder="Address" id="address" value="{{imgService.filledCard.address || ''}}" #address>
     </mat-form-field>
     <div class="clearfix">
-    <button mat-button style="float: right;" (click)="addCard(firstName, lastName, organization, position, email, phone, address)"
+    <button mat-button style="float: right;" (click)="addCard(firstName, lastName, organization, position, email, phone, address); clearForm()"
             >
         <mat-icon class="icon" matPrefix>add_circle</mat-icon> Submit
     </button></div>

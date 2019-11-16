@@ -19,7 +19,7 @@ export class ImageService implements OnDestroy {
     saves: boolean = false;
     hsubscription: Subscription;
     esubscription: Subscription;
-
+    filledCard: Card = new Card();
   constructor(public http: Http, private authService: AuthService,
               private appService: AppService,
               private router: Router) { }
@@ -75,8 +75,6 @@ export class ImageService implements OnDestroy {
                ]};
         const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + environment.cloudVision;
         this.hsubscription = this.http.post(url, request).subscribe( (results: any) => {
-            console.log('Full Text Annotation from Remote');
-            console.log(results.json().responses[0].fullTextAnnotation.text);
             this.getEntities(results.json().responses[0].fullTextAnnotation.text);
         });
     } else if (image64 && image64.length >= 2) {
@@ -87,8 +85,6 @@ export class ImageService implements OnDestroy {
           'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]}]};
           const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + environment.cloudVision;
           this.hsubscription = this.http.post(url, request).subscribe( (results: any) => {
-                console.log('Full Text Annotation from Local: ');
-                console.log(results.json().responses[0].fullTextAnnotation.text);
                 this.getEntities(results.json().responses[0].fullTextAnnotation.text);
                 });
     } else { const request: any = {
@@ -98,8 +94,6 @@ export class ImageService implements OnDestroy {
       'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]}]};
       const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + environment.cloudVision;
       this.hsubscription = this.http.post(url, request).subscribe( (results: any) => {
-            console.log('Full Text Annotation from Local: ');
-            console.log(results.json().responses[0].fullTextAnnotation.text);
             this.getEntities(results.json().responses[0].fullTextAnnotation.text);
             });
       }
@@ -143,9 +137,8 @@ export class ImageService implements OnDestroy {
                         businessCard.email = el.name;
                     }
                 });
-    this.appService.addCard(businessCard);
-    this.router.navigate(['/card']);
-
+    this.filledCard = businessCard;
+    this.router.navigate(['/add-card']);
   }
 
   ngOnDestroy() {

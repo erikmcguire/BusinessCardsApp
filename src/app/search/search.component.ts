@@ -37,13 +37,16 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.placeholder = t;
   }
     searchCards(query): boolean {
+        if (!query) return false;
         if (this.fn) {
             this.t = "firstName";
         }
         else if (this.org) {
             this.t = "organization"
         }
-        if (!this.t) this.t = "firstName";
+        if (!this.t) {
+            this.t = "firstName";
+        }
         gtag("event", "search", {search_term: query})
        this.cards = this.afs.collection(
                              config.collection_endpoint,

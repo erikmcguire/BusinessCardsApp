@@ -1,6 +1,6 @@
-<br><div class="example-container" style="margin-top: 10%;">
-  <mat-card style="position: fixed; z-index: 1;">
-      <mat-form-field><mat-icon class="icon" matPrefix>search</mat-icon>
+
+  <mat-card style="position: fixed; z-index: 1; margin-top: 5%; width: 80%">
+      <mat-form-field style="width: 50%;"><mat-icon class="icon" matPrefix>search</mat-icon>
           <input matInput name="search" placeholder="{{placeholder}}" #search
   (keyup.enter)="searchCards(search.value)">
   </mat-form-field>
@@ -20,8 +20,7 @@
       </mat-radio-button>
   </mat-radio-group>
   </mat-card><br>
-</div>
-<div class="example-container centerd" *ngIf="showResults" style="margin-top: 10%;">
+<div class="example-container centerd" *ngIf="showResults" style="margin-top: 20%;">
     <ul *ngFor="let card of cards | async | reverse" class="col-1-4">
     <br><mat-card>
         <mat-card-content>

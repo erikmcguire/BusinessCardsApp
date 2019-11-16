@@ -3,6 +3,7 @@ import { AppService } from '../app.service';
 import { ImageService } from '../image.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { Card } from '../card.model';
 
 @Component({
   selector: 'app-newbusinesscard',
@@ -32,12 +33,18 @@ export class NewbusinesscardComponent implements OnInit {
                           phone: phone.value,
                           address: address.value,
                           author: this.authService.afAuth.auth.currentUser.uid,
-                          addedAt: Date.now()
+                          addedAt: Date.now(),
+                          imageUri: this.imgService.filledCard.imageUri || ""
                       };
       this.card = businessCard;
       this.appService.addCard(businessCard);
       this.router.navigate(['/card']);
       return false;
+      }
+
+      clearForm() {
+          this.imgService.filledCard = new Card();
+          return false;
       }
 
     ngOnInit() {

@@ -1,3 +1,43 @@
+<mat-card *ngIf="editMode" class="centerd" style="margin-top: 8%;">
+ <mat-card-content>
+  <form  #f="ngForm">
+    <div class="form-group">
+        <mat-form-field>
+            <input matInput name="firstName" id="firstName" placeholder="{{getValue(myCard.firstName, 'First Name')}}" #firstName>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput name="lastName" id="lastName" placeholder="{{getValue(myCard.lastName, 'Last Name')}}" #lastName>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput name="organization" id="organization" placeholder="{{getValue(myCard.organization, 'Organization')}}" #organization>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput name="position" id="position" placeholder="{{getValue(myCard.position, 'Position')}}" #position>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput name="email" id="email" placeholder="{{getValue(myCard.email, 'Email')}}"  #email>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput name="phone" id="phone" placeholder="{{getValue(myCard.phone, 'Phone')}}" #phone>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput name="address" id="address" placeholder="{{getValue(myCard.address, 'Address')}}" #address>
+        </mat-form-field>
+    </div>
+    <div class="form-group">
+    <div class="clearfix">
+
+      <button mat-button class="btn btn-primary" style="float: right; margin-right: 10px;" [disabled]="!f.valid" (click)="saveCard(firstName, lastName, organization, position, email, phone, address)"><mat-icon class="icon" matPrefix>edit_attributes</mat-icon>
+        Confirm
+      </button>
+      <button mat-button class="btn btn-danger" type="button" style="float: right; margin-right: 10px;" [disabled]="!f.valid" (click)="cancelEdit()"><mat-icon class="icon" matPrefix>cancel</mat-icon>
+      Cancel
+      </button>
+      </div>
+    </div>
+  </form>
+</mat-card-content>
+</mat-card>
 <div class="example-container centerd">
     <ul *ngFor="let card of cards | async | reverse" class="col-1-4" style="margin-top: 10%;">
     <br><mat-card *ngIf="saved">
@@ -23,46 +63,4 @@
 </button>
 </div>
 </ul>
-<div class="example-form">
-    <mat-card *ngIf="editMode">
-     <mat-card-content>
-      <form  #f="ngForm">
-        <div class="form-group">
-            <mat-form-field>
-                <input matInput name="firstName" id="firstName" placeholder="{{getValue(myCard.firstName, 'First Name')}}" #firstName>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput name="lastName" id="lastName" placeholder="{{getValue(myCard.lastName, 'Last Name')}}" #lastName>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput name="organization" id="organization" placeholder="{{getValue(myCard.organization, 'Organization')}}" #organization>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput name="position" id="position" placeholder="{{getValue(myCard.position, 'Position')}}" #position>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput name="email" id="email" placeholder="{{getValue(myCard.email, 'Email')}}"  #email>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput name="phone" id="phone" placeholder="{{getValue(myCard.phone, 'Phone')}}" #phone>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput name="address" id="address" placeholder="{{getValue(myCard.address, 'Address')}}" #address>
-            </mat-form-field>
-        </div>
-        <div class="form-group">
-        <div class="clearfix">
-
-          <button mat-button class="btn btn-primary" style="float: right; margin-right: 10px;" [disabled]="!f.valid" (click)="saveCard(firstName, lastName, organization, position, email, phone, address)"><mat-icon class="icon" matPrefix>edit_attributes</mat-icon>
-            Confirm
-          </button>
-          <button mat-button class="btn btn-danger" type="button" style="float: right; margin-right: 10px;" [disabled]="!f.valid" (click)="cancelEdit()"><mat-icon class="icon" matPrefix>cancel</mat-icon>
-          Cancel
-          </button>
-          </div>
-        </div>
-      </form>
-   </mat-card-content>
-  </mat-card>
-</div>
 </div>
