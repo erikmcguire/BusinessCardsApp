@@ -1,28 +1,42 @@
+<div class="example-container centerd" style="margin-top: 10%;" >
+    <button mat-button id="snap" class="centerd" (click)="toggleCamera()">
+        Toggle Camera
+    </button>
+</div>
 <div id="webcam" style="margin-top: 10%;">
     <div class="img">
             <img [src]="imgService.localImg" id="image" />
-            <div>
-              <button (click)="imgService.convertToBase64()"> Base 64 </button>
-              <div class="radio">
-                  <label>
-                      <input type="radio" [checked]="imgService.saveb" (change)="imgService.toggleSave('b')">
+            <div class="centerd">
+              <button mat-button (click)="imgService.convertToBase64()">
+                  Base 64
+              </button>
+              <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group" >
+                      <mat-radio-button class="example-radio-button" [value]="imgService.saveb" (change)="imgService.toggleSave('b')">
                       &nbsp; Save PNG
-                  </label>
-              </div>
-              <button (click)="imgService.scanCard('s')"> Scan </button>
-              <div class="radio">
-                  <label>
-                      <input type="radio" [checked]="imgService.saves" (change)="imgService.toggleSave('s')">
+                  </mat-radio-button>
+              </mat-radio-group>
+              <button mat-button (click)="imgService.scanCard('s')">
+                   Scan
+               </button>
+              <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group">
+                <mat-radio-button class="example-radio-button"
+                    [value]="imgService.saves" (change)="imgService.toggleSave('s')">
                       &nbsp; Save PNG
-                  </label>
-              </div>
+                  </mat-radio-button>
+                </mat-radio-group>
             </div>
     </div>
     <div>
         <video id="video" width="640" height="480" autoplay #video></video>
     </div>
     <div>
-        <button id="snap" (click)="snap()">Snap Photo</button>
+        <button mat-button id="snap" (click)="snap()">
+            Snap Photo
+        </button>
     </div>
     <canvas id="canvas" width="640" height="480" #canvas ></canvas>
     <ul>

@@ -11,17 +11,38 @@ export class WebcamComponent implements OnInit {
     video: HTMLVideoElement;
     canvas: HTMLCanvasElement;
     photo: HTMLImageElement;
+    toggleCam: boolean = false;
 
     constructor(private imgService: ImageService) {
     }
 
     ngOnInit() {
-        this.video = document.querySelector('video');
-        if (navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true }).then(
-                (stream) => {
-                    this.video.srcObject = stream},
+    }
+
+    toggleCamera() {
+        if (!this.toggleCam) {
+            let rc = document.getElementById('video')
+            rc.style.display = "none";
+            this.toggleCam = true;
+            this.video = document.querySelector('video');
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true }).then(
+                    (stream) => {
+                        this.video.srcObject = stream},
+                        err => { console.log(err) });
+            }
+        } else {
+            this.toggleCam = false;
+            let rc = document.getElementById('webcam')
+            rc.style.display = "block";
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({video: true})
+                .then(stream => {
+                      this.video.srcObject = null;
+                      stream.getTracks()[0].stop();
+                     },
                     err => { console.log(err) });
+            }
         }
     }
 

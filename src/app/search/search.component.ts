@@ -3,7 +3,9 @@ import { Observable, Subscription } from 'rxjs';
 import { config } from '../app.config';
 import { AuthService } from '../auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
+import { ImageService } from '../image.service';
+import { Card } from '../card.model';
 
 declare var gtag;
 
@@ -14,34 +16,59 @@ declare var gtag;
 })
 export class SearchComponent implements OnInit, OnDestroy {
     cards: Observable<any[]>;
-    qsubscription: Subscription;
+    showResults: boolean = false;
+    fn: boolean = false;
+    org: boolean = false;
+    t: string = "";
+    placeholder = "First Name";
   constructor(private authService: AuthService,
-              private afs: AngularFirestore) { }
+              private imgService: ImageService,
+              private afs: AngularFirestore) {
+          }
 
-    searchCards(t, query): boolean {
+  toggleSearch(t) {
+      if (t === 'firstName') {
+        this.fn = !this.fn;
+    } else if (t === 'organization') {
+        this.org = !this.org;
+    }
+  }
+  changePH(t) {
+      this.placeholder = t;
+  }
+    searchCards(query): boolean {
+        if (this.fn) {
+            this.t = "firstName";
+        }
+        else if (this.org) {
+            this.t = "organization"
+        }
+        if (!this.t) this.t = "firstName";
         gtag("event", "search", {search_term: query})
-        const queryObservable = this.afs.collection(
-                              config.collection_endpoint,
-                              ref => ref.where("author", "==",
-                                  JSON.parse(this.authService.getUser()).uid)
-                                  .where(t, '==', query).orderBy('addedAt')).valueChanges();
-
-       this.qsubscription = queryObservable
-        .pipe(take(1))
-        .subscribe((q: any) => {
-         if (t == 'firstName' && q[0]) {
-             console.log(q[0].firstName);
-         } else if (t == 'organization' && q[0]) {
-             console.log(q[0].organization);
-         }
-       });
-      return false;
+       this.cards = this.afs.collection(
+                             config.collection_endpoint,
+                             ref => ref.where("author", "==",
+                                 JSON.parse(this.authService.getUser()).uid)
+                                 .where(this.t, '==', query).orderBy('addedAt')).snapshotChanges()
+             .pipe(
+                map(actions => {
+                    return actions.map(a => {
+                    const data = a.payload.doc.data() as Card;
+                    const id = a.payload.doc.id;
+                    return { id, ...data };
+                });
+           })
+       );
+       this.showResults = true;
+       return false;
+   }
+   displayCardImg(card) {
+       this.imgService.displayCardImg(card);
    }
   ngOnInit() {
   }
   ngOnDestroy() {
-      if (this.qsubscription) {
-          this.qsubscription.unsubscribe();
-      }
+
+      this.showResults = false;
   }
 }

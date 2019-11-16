@@ -5,6 +5,8 @@ import domtoimage from 'dom-to-image';
 import { Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
 import { AppService } from './app.service';
+import { Router } from '@angular/router';
+import { Card } from './card.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,8 @@ export class ImageService implements OnDestroy {
     esubscription: Subscription;
 
   constructor(public http: Http, private authService: AuthService,
-              private appService: AppService) { }
+              private appService: AppService,
+              private router: Router) { }
 
   convertToBase64() {
      const imgNode = document.getElementById(`image`);
@@ -49,6 +52,12 @@ export class ImageService implements OnDestroy {
     } else if (t === 's') {
         this.saves = !this.saves;
     }
+  }
+
+  displayCardImg(card: Card) {
+      if (card.imageUri) {
+          return card.imageUri;
+      } else return "";
   }
 
   scanCard(image64?: string, t?: string) {
@@ -135,6 +144,7 @@ export class ImageService implements OnDestroy {
                     }
                 });
     this.appService.addCard(businessCard);
+    this.router.navigate(['/card']);
 
   }
 

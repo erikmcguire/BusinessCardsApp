@@ -1,24 +1,35 @@
 <mat-toolbar mat-scroll-shrink class="mat-elevation-z4"
              style="z-index: 1; position: fixed;"
-             color="secondary">
-    <mat-toolbar-row>
+             >
     <div id="dashboard" class="md-toolbar-tools">
-        <a mat-button routerLink="/login" routerLinkActive="active">
-            <mat-icon class="icon">exit_to_app</mat-icon> Log in/out
+    <nav mat-tab-nav-bar>
+
+
+                <a mat-tab-link routerLink="/login" routerLinkActive="active">
+            <mat-icon class="icon" matPrefix>exit_to_app</mat-icon>Log in/out
         </a>
-        <a mat-button routerLink="/add-card" routerLinkActive="active">
-            <mat-icon class="icon">person_add</mat-icon> Add Card
+
+
+
+    <a mat-tab-link routerLink="/add-card" routerLinkActive="active">
+            <mat-icon class="icon" matPrefix>person_add</mat-icon>Add Card
         </a>
-        <a mat-button routerLink="/search" routerLinkActive="active">
-            <mat-icon class="icon">search</mat-icon> Search
+
+
+        <a mat-tab-link routerLink="/search" routerLinkActive="active">
+            <mat-icon class="icon" matPrefix>search</mat-icon>Search
         </a>
-        <a mat-button routerLink="/webcam" routerLinkActive="active">
-            <mat-icon class="icon">camera</mat-icon> Scan
+
+
+        <a mat-tab-link routerLink="/webcam" routerLinkActive="active">
+            <mat-icon class="icon" matPrefix>camera</mat-icon>Scan
         </a>
-        <a mat-button routerLink="/card" routerLinkActive="active"><mat-icon class="icon">person_add</mat-icon> Contacts
+
+
+        <a mat-tab-link routerLink="/card" routerLinkActive="active"><mat-icon class="icon" matPrefix>import_contacts</mat-icon>Contacts
         </a>
+        </nav>
     </div>
-    </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="container" [@routeAnimations]="prepareRoute(outlet)">
