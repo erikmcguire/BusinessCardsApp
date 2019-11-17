@@ -21,9 +21,10 @@ export class ImageService implements OnDestroy {
     esubscription: Subscription;
     filledCard: Card = new Card();
     fromScan: boolean = false;
-  constructor(public http: Http, private authService: AuthService,
-              private appService: AppService,
-              private router: Router) { }
+    constructor(public http: Http,
+                private authService: AuthService,
+                private appService: AppService,
+                private router: Router) { }
 
   convertToBase64() {
      const imgNode = document.getElementById(`image`);
@@ -66,60 +67,40 @@ export class ImageService implements OnDestroy {
          this.saveImg(image64, t);
       }
       if (!this.base64 && image64 == 's') {
-          const request: any = {
+            const request: any = {
               'requests': [
-                  {'image': {
-                    'source': {'imageUri': this.remoteImg}
+                  {'image': {'source': {'imageUri': this.remoteImg}
                   },
               'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]
                   }
                ]};
-        const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + environment.cloudVision;
-        this.hsubscription = this.http.post(url, request).subscribe( (results: any) => {
-            if (results.json().responses[0].fullTextAnnotation) {
-              let txt = results.json().responses[0].fullTextAnnotation.text;
-              console.log("Entities: ", txt);
-              this.getEntities(txt);
-          } else {
-              let txt = "";
-              this.getEntities(txt);
-          }
-        });
+        this.makeRequest(request);
     } else if (image64 && image64.length >= 2) {
             const request: any = {
-                    'requests': [{
-                        'image': {
-                            'content': image64.replace(/.*base64\,/, "")},
+                'requests': [{'image': {'content': image64.replace(/.*base64\,/, "")},
           'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]}]};
-          const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + environment.cloudVision;
-          this.hsubscription = this.http.post(url, request).subscribe( (results: any) => {
-              if (results.json().responses[0].fullTextAnnotation) {
-                let txt = results.json().responses[0].fullTextAnnotation.text;
-                console.log("Entities: ", txt);
-                this.getEntities(txt);
-            } else {
-                let txt = "";
-                this.getEntities(txt);
-            }
-                });
-    } else { const request: any = {
-                'requests': [{
-                    'image': {
-                        'content': this.base64.replace(/.*base64\,/, "")},
+           this.makeRequest(request);
+    } else {
+        const request: any = {
+            'requests': [{'image': {'content': this.base64.replace(/.*base64\,/, "")},
       'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]}]};
+      this.makeRequest(request);
+      }
+  }
+
+  makeRequest(request) {
       const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + environment.cloudVision;
       this.hsubscription = this.http.post(url, request).subscribe(
            (results: any) => {
           if (results.json().responses[0].fullTextAnnotation) {
             let txt = results.json().responses[0].fullTextAnnotation.text;
-            console.log("Entities: ", txt);
+            console.log(results.json().responses[0].fullTextAnnotation.text);
             this.getEntities(txt);
         } else {
             let txt = "";
             this.getEntities(txt);
         }
             });
-      }
   }
 
   getEntities(text: string) {
@@ -135,7 +116,6 @@ export class ImageService implements OnDestroy {
       this.esubscription = this.http.post(url, request).subscribe( (results: any) => {
             this.fillEnts(results.json().entities);
             });
-
   }
 
   toTitle(el): string {
@@ -144,7 +124,6 @@ export class ImageService implements OnDestroy {
 
   fillEnts(ents: any) {
     let businessCard: any = {};
-
     businessCard.author = this.authService.afAuth.auth.currentUser.uid;
     businessCard.addedAt = Date.now();
     businessCard.imageUri = this.base64 || this.remoteImg;
@@ -173,9 +152,11 @@ export class ImageService implements OnDestroy {
         this.fromScan = false;
     }
   }
+
   navAdd() {
       this.router.navigate(['/add-card']);
   }
+
   ngOnDestroy() {
       this.esubscription.unsubscribe();
       this.hsubscription.unsubscribe();

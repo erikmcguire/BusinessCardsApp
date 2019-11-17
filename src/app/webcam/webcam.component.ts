@@ -14,11 +14,13 @@ export class WebcamComponent implements OnInit, OnDestroy {
     toggleCam: boolean;
     stream: MediaStream = null;
     constructor(private imgService: ImageService) {
-        this.toggleCam = false;
-    }
+        }
 
     ngOnInit() {
         this.video = document.querySelector('video');
+        this.toggleCam = false;
+        let td = document.getElementById('scanner');
+        td.style.display = "none";
     }
 
     ngOnDestroy() {
@@ -36,24 +38,24 @@ export class WebcamComponent implements OnInit, OnDestroy {
 
     stopCamera() {
         this.video.srcObject = null;
-        let vd = document.getElementById('video');
-        vd.style.display = "none";
+        let td = document.getElementById('scanner');
+        td.style.display = "none";
         if (this.stream && this.stream.getTracks) {
             this.stream.getTracks().forEach((track: MediaStreamTrack) => { track.stop()});
         }
     }
+
     toggleCamera() {
         this.toggleCam = !this.toggleCam;
         if (navigator.mediaDevices.getUserMedia) {
-            let vd = document.getElementById('video');
-            vd.style.display = "block";
+            let td = document.getElementById('scanner');
             if (this.toggleCam) {
-                    navigator.mediaDevices.getUserMedia({ video: true }).then(
-                        (stream) => {
-                            this.stream = stream;
-                            this.video.srcObject = stream;
-                        }, err => { console.log(err) });
-
+                td.style.display = "block";
+                navigator.mediaDevices.getUserMedia({ video: true }).then(
+                    (stream) => {
+                        this.stream = stream;
+                        this.video.srcObject = stream;
+                    }, err => { console.log(err) });
             } else {
                 this.stopCamera();
             }

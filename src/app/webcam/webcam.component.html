@@ -1,39 +1,38 @@
-    <mat-card  style="margin-top: 10%;" >
-        <mat-card-subtitle>Optional: Use a local or remote image.</mat-card-subtitle>
-        <mat-card-content>
-            <mat-form-field style="width: 55%;">
-                <mat-label>Path (e.g., images/card.png or https://path/card.png).</mat-label>
-                <mat-icon class="icon" matPrefix>add_a_photo</mat-icon>
-                <input matInput name="image" #image
-        (keyup.enter)="setImage(image.value)">
-            </mat-form-field>
-<button mat-button color="primary" name="image"
-   (click)="setImage(image.value)">
-   <mat-icon class="icon" matPrefix>add_a_photo</mat-icon>
-   Submit
-</button>
-</mat-card-content>
+<mat-card style="margin-top: 10%;" >
+    <mat-card-subtitle>Optional: Use a local or remote image.</mat-card-subtitle>
+    <mat-card-content>
+        <mat-form-field style="width: 55%;">
+            <mat-label>Path (e.g., images/card.png or https://path/card.png).</mat-label>
+            <mat-icon class="icon" matPrefix>add_a_photo</mat-icon>
+            <input matInput name="image" #image
+    (keyup.enter)="setImage(image.value)">
+        </mat-form-field>
+    <button mat-button color="primary" name="image"
+       (click)="setImage(image.value)">
+       <mat-icon class="icon" matPrefix>add_a_photo</mat-icon>
+       Submit
+    </button>
+    </mat-card-content>
 </mat-card>
+
 <div class="example-container centerd">
-    <button mat-button id="snap" class="centerd" (click)="toggleCamera()">
+    <button mat-button id="toggle" class="centerd" (click)="toggleCamera()">
         Toggle Camera
     </button>
-    <mat-card>
-        <video id="video" autoplay height="640" width="480" #video></video>
+    <mat-card class="example-container" id="scanner" style="margin-top: 5%;">
+        <video id="video" class="example-container" autoplay #video></video>
         <br>
         <button mat-button id="snap" (click)="snap()">
         <mat-icon>add_photo_alternate</mat-icon> Snap Photo
     </button>
-    </mat-card>
-    <mat-card>
         <canvas #canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
-        <img *ngIf="photo" src="{{photo.src}}" class="example-card"><br>
-        <button mat-button id="snap" (click)="imgService.navAdd()">
+        <img *ngIf="photo" src="{{photo.src}}"><br>
+        <button mat-button id="add" (click)="imgService.navAdd()">
         <mat-icon>add_photo_alternate</mat-icon> Add Page
     </button><br>
+        </mat-card>
+    <mat-card class="example-container" style="margin-top: 5%;">
         <img [src]="imgService.localImg" id="image" />
-    </mat-card>
-    <div class="centerd">
       <button mat-button (click)="imgService.convertToBase64()">
           Convert to Base 64
       </button>
@@ -55,5 +54,5 @@
               &nbsp; Save PNG
           </mat-radio-button>
         </mat-radio-group>
-    </div>
+    </mat-card>
 </div>
