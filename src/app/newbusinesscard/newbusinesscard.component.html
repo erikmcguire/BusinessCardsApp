@@ -24,9 +24,13 @@
         <input matInput name="address" placeholder="Address" id="address" value="{{imgService.filledCard.address || ''}}" #address>
     </mat-form-field>
     <div class="clearfix">
-    <button mat-button style="float: right;" (click)="addCard(firstName, lastName, organization, position, email, phone, address); clearForm()"
+        <button mat-button style="float: right;" (click)="addCard(firstName, lastName, organization, position, email, phone, address); clearForm()"
+                >
+            <mat-icon class="icon" matPrefix>add_circle</mat-icon> Add
+        </button>
+    <button mat-button style="float: right;" (click)="clearForm()"
             >
-        <mat-icon class="icon" matPrefix>add_circle</mat-icon> Submit
+        <mat-icon class="icon" matPrefix>clear_all</mat-icon> Clear
     </button></div>
     </mat-card>
 </form>

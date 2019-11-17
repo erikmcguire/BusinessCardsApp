@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Http } from '@angular/http';
 import domtoimage from 'dom-to-image';
@@ -11,7 +11,7 @@ import { Card } from './card.model';
 @Injectable({
   providedIn: 'root'
 })
-export class ImageService implements OnDestroy {
+export class ImageService implements OnInit, OnDestroy {
     localImg = 'assets/images/bateman.png';
     remoteImg = 'https://i.pinimg.com/originals/26/b6/84/26b684bb28d44c7da4d83596ebd424a6.png';
     base64: string;
@@ -34,6 +34,7 @@ export class ImageService implements OnDestroy {
                                 this.saveImg(dataUrl, 'b');
                              }
                              this.base64 = dataUrl;
+                             this.scanCard();
                       }).catch( (e: any) => {
                                  console.log(e);
                             });
@@ -94,10 +95,11 @@ export class ImageService implements OnDestroy {
            (results: any) => {
           if (results.json().responses[0].fullTextAnnotation) {
             let txt = results.json().responses[0].fullTextAnnotation.text;
-            console.log(results.json().responses[0].fullTextAnnotation.text);
+            console.log("Full text annotation: ", results.json().responses[0].fullTextAnnotation.text);
             this.getEntities(txt);
         } else {
             let txt = "";
+            console.log("Nothing found.", request);
             this.getEntities(txt);
         }
             });
@@ -114,12 +116,13 @@ export class ImageService implements OnDestroy {
              }
          }
       this.esubscription = this.http.post(url, request).subscribe( (results: any) => {
+            console.log("Entities: ", results.json().entities);
             this.fillEnts(results.json().entities);
             });
   }
 
   toTitle(el): string {
-      return el[0].toUpperCase() + el.slice(1).toLowerCase()
+      return el.charAt(el.search(/[^A-z0-9]/)) + " " + el.charAt(el.search(/[A-z]/)).toUpperCase() + el.slice(el.search(/[A-z]/) + 1).toLowerCase()
   }
 
   fillEnts(ents: any) {
@@ -132,15 +135,18 @@ export class ImageService implements OnDestroy {
                         businessCard.firstName =
                             this.toTitle(el.name.split(" ")[0])
                         businessCard.lastName =
-                            this.toTitle(el.name.split(" ")[1])
+                            el.name.split(" ").slice(1).map(w => this.toTitle(w)).join(" ")
                           }
                     else if (el.type === "ORGANIZATION") {
-                        businessCard.organization = this.toTitle(el.name);
+                        businessCard.organization = el.name.split(" ").map(w => this.toTitle(w)).join(" ");
                     } else if (el.type === "PHONE_NUMBER") {
                         businessCard.phone = el.name;
-                    }
-                    else if (el.type === "LOCATION" && el.name.search(/[0-9]/) != -1 || el.type === "ADDRESS") {
-                        businessCard.address = el.name;
+                    } else if (el.type === "LOCATION" && el.name.search(/[0-9]/) != -1 || el.type === "ADDRESS") {
+                        businessCard.address = el.name.split(" ").map(w => this.toTitle(w)).join(" ");
+                    } else if (el.type === "LOCATION" || el.type === "ADDRESS") {
+                            if (!businessCard.address && el.metadata.wikipedia_url) {
+                                businessCard.address = el.name.split(" ").map(w => this.toTitle(w)).join(" ");
+                            }
                     } else if (el.type.search("@") != -1) {
                         businessCard.email = el.name;
                     }
@@ -151,6 +157,11 @@ export class ImageService implements OnDestroy {
     } else {
         this.fromScan = false;
     }
+  }
+
+  ngOnInit() {
+      this.hsubscription = null;
+      this.esubscription = null;
   }
 
   navAdd() {
