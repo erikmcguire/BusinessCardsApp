@@ -108,11 +108,13 @@ export class ImageService implements OnInit, OnDestroy {
                     if (el.type === "PERSON") {
                         businessCard.firstName =
                             this.toTitle(el.name.split(" ")[0])
+                        businessCard.firstNameLower = businessCard.firstName.toLowerCase()
                         businessCard.lastName =
                             el.name.split(" ").slice(1).map(w => this.toTitle(w)).join(" ")
                           }
                     else if (el.type === "ORGANIZATION") {
                         businessCard.organization = el.name.split(" ").map(w => this.toTitle(w)).join(" ");
+                        businessCard.orgLower = businessCard.organization.toLowerCase()
                     } else if (el.type === "PHONE_NUMBER") {
                         businessCard.phone = el.name;
                     } else if (el.type === "LOCATION" && el.name.search(/[0-9]/) != -1 || el.type === "ADDRESS") {

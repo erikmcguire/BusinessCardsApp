@@ -1,40 +1,43 @@
 <div style="margin-top: 10%;">
     <div *ngIf="!authService.getUser() else elseBlock" class="example-container ">
-  <mat-card *ngIf="ep">
+
+  <mat-expansion-panel class="example-container">
+      <mat-expansion-panel-header>
+  <mat-panel-title>
+    Sign in with Firebase:
+  </mat-panel-title>
+  <mat-panel-description>
+    Enter your Firebase email and password
+  </mat-panel-description>
+</mat-expansion-panel-header>
   <mat-form-field>
     <input matInput name="username" placeholder="Email" #email
-    (keyup.enter)="login(email, password)" required>
+    (keyup.enter)="changePH('Email w/ Pass'); toggleGoogle('Email w/ Pass'); login(email, password)" required>
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="password" name="password"  placeholder="Password" #password (keyup.enter)="login(email, password)"
-required></mat-form-field>
-    <button mat-button
-       (click)="login(email, password)">
-       <mat-icon>input</mat-icon> Sign-In
-    </button>
-</mat-card><br>
-<mat-card>
-    <mat-radio-group
-      aria-labelledby="example-radio-group-label"
-      class="example-radio-group" >
-        <mat-radio-button class="example-radio-button" *ngFor="let lt of ltypes" (change)="changePH(lt); toggleGoogle(lt)" [value]="lt">
-            {{lt}}
-        </mat-radio-button>
-        <button mat-button class="example-container" *ngIf="g"
-           (click)="login('', '')">
-           <mat-icon>input</mat-icon> Sign-In
+    <input matInput type="password" name="password"  placeholder="Password" #password (keyup.enter)="changePH('Email w/ Pass'); toggleGoogle('Email w/ Pass'); login(email, password)"
+required></mat-form-field>&nbsp;
+<button mat-button
+   (click)="changePH('Email w/ Pass'); toggleGoogle('Email w/ Pass'); login(email, password)">
+   <mat-icon>input</mat-icon> Firebase Sign-In
+</button></mat-expansion-panel>
+<br>
+<mat-card class="example-container">
+        <button mat-button
+           (click)="changePH('Google'); toggleGoogle('Google'); login('', '')">
+           <mat-icon>input</mat-icon> Google Sign-In
         </button>
-    </mat-radio-group>
 </mat-card>
 </div>
 <ng-template #elseBlock>
-    <mat-card>
+    <div class="example-container ">
+    <mat-card class="example-container">
         <mat-card-subtitle>
             Logged in as <b>{{ printUser() }}</b>
         </mat-card-subtitle>
         <mat-card-content>
-            <a mat-button href (click)="logout()"><mat-icon>exit_to_app</mat-icon> Log Out</a>
+            <a mat-button class="example-container" href (click)="logout()"><mat-icon>exit_to_app</mat-icon> Sign-Out</a>
         </mat-card-content>
-    </mat-card>
+    </mat-card></div>
 </ng-template>
 </div>

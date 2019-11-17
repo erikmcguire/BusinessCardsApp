@@ -19,6 +19,9 @@ export class BusinesscardComponent implements OnInit {
   editMode: boolean = false;
   cardToEdit: any = {};
   saved: boolean = true;
+  isActive: boolean = false;
+  dbhover: boolean = false;
+  ebhover: boolean = false;
   cards: Observable<any[]>;
   constructor(private appService: AppService,
               private authService: AuthService,
@@ -62,7 +65,9 @@ export class BusinesscardComponent implements OnInit {
             let card = {
                     firstName: firstName.value || this.myCard.firstName,
                     lastName: lastName.value || this.myCard.lastName,
+                    firstNameLower: firstName.value.toLowerCase() || this.myCard.firstName.toLowerCase(),
                     organization: organization.value || this.myCard.organization,
+                    orgLower: organization.value.toLowerCase() || this.myCard.organization.toLowerCase(),
                     position: position.value || this.myCard.position,
                     email: email.value || this.myCard.email,
                     phone: phone.value || this.myCard.phone,

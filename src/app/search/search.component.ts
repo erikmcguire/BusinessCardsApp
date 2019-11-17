@@ -42,20 +42,20 @@ export class SearchComponent implements OnInit, OnDestroy {
     searchCards(query): boolean {
         if (!query) return false;
         if (this.fn) {
-            this.t = "firstName";
+            this.t = "firstNameLower";
         }
         else if (this.org) {
-            this.t = "organization"
+            this.t = "orgLower"
         }
         if (!this.t) {
-            this.t = "firstName";
+            this.t = "firstNameLower";
         }
         gtag("event", "search", {search_term: query})
        this.cards = this.afs.collection(
                              config.collection_endpoint,
                              ref => ref.where("author", "==",
                                  JSON.parse(this.authService.getUser()).uid)
-                                 .where(this.t, '==', query).orderBy('addedAt')).snapshotChanges()
+                                 .where(this.t.trim(), '==', query.trim().toLowerCase()).orderBy('addedAt')).snapshotChanges()
              .pipe(
                 map(actions => {
                     return actions.map(a => {

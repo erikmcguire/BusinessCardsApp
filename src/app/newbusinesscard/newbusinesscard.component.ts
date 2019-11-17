@@ -26,8 +26,10 @@ export class NewbusinesscardComponent implements OnInit {
             address: HTMLInputElement): boolean {
       let businessCard = {
                           firstName: firstName.value,
+                          firstNameLower: firstName.value.toLowerCase(),
                           lastName: lastName.value,
                           organization: organization.value,
+                          orgLower: organization.value.toLowerCase(),
                           position: position.value,
                           email: email.value,
                           phone: phone.value,

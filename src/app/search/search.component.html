@@ -1,9 +1,9 @@
-<mat-card style="position: fixed; z-index: 1; margin-top: 5%; width: 80%">
+<mat-card style="position: fixed; z-index: 1; margin-top: 10%; width: 70%">
     <mat-form-field style="width: 50%;">
         <mat-icon class="icon" matPrefix>search</mat-icon>
           <input matInput name="search" placeholder="{{placeholder}}" #search
   (keyup.enter)="searchCards(search.value)">
-    </mat-form-field>
+    </mat-form-field>&nbsp;
    <button mat-button color="primary" name="search"
      (click)="searchCards(search.value)">
      <mat-icon class="icon" matPrefix>input</mat-icon>
