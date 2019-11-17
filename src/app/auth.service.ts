@@ -7,6 +7,7 @@ import { auth } from 'firebase/app';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService implements OnDestroy {
   asubscription: Subscription;
   constructor(public afAuth: AngularFireAuth,

@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
                   }
             this.ngZone.run(() => this.router.navigate(['/card']));
         });
-
   }
 
   toggleGoogle(t) {
@@ -65,8 +64,8 @@ export class LoginComponent implements OnInit {
   printUser(): string {
       return this.authService.printUser();
   }
-  ngOnInit() {
 
+  ngOnInit() {
   }
 
 }

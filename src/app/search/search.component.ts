@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { config } from '../app.config';
 import { AuthService } from '../auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { take, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ImageService } from '../image.service';
 import { Card } from '../card.model';
 
@@ -68,13 +68,15 @@ export class SearchComponent implements OnInit, OnDestroy {
        this.showResults = true;
        return false;
    }
+
    displayCardImg(card) {
        this.imgService.displayCardImg(card);
    }
+
   ngOnInit() {
   }
-  ngOnDestroy() {
 
+  ngOnDestroy() {
       this.showResults = false;
   }
 }

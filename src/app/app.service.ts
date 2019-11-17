@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Card } from "./card.model";
 import { config } from './app.config';
 import { AngularFirestoreCollection,
@@ -7,9 +7,7 @@ import { AngularFirestoreCollection,
        from '@angular/fire/firestore';
 import { BusinesscardComponent }
        from './businesscard/businesscard.component';
-import { Subject, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { AuthService } from './auth.service';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +19,7 @@ export class AppService implements OnInit {
   private cardDoc: AngularFirestoreDocument<Card>;
   qsubscription: Subscription;
 
-  constructor(private afs: AngularFirestore,
-              private authService: AuthService) {
+  constructor(private afs: AngularFirestore) {
       this.cards = this.afs.collection<Card>(config.collection_endpoint);
   }
 

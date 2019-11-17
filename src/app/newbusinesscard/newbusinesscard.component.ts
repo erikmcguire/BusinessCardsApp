@@ -42,10 +42,10 @@ export class NewbusinesscardComponent implements OnInit {
       return false;
       }
 
-      clearForm() {
-          this.imgService.filledCard = new Card();
-          this.imgService.base64 = null;
-          return false;
+    clearForm() {
+       this.imgService.filledCard = new Card();
+       this.imgService.base64 = null;
+       return false;
       }
 
     ngOnInit() {

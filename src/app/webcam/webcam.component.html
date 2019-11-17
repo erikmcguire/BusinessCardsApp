@@ -14,7 +14,6 @@
     </button>
     </mat-card-content>
 </mat-card>
-
 <div class="example-container centerd">
     <button mat-button id="toggle" class="centerd" (click)="toggleCamera()">
         Toggle Camera
@@ -36,26 +35,11 @@
       <button mat-button (click)="imgService.convertToBase64();" id="convert">
           Scan Local
       </button>
-      <!--<mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group" >
-            <mat-radio-button class="example-radio-button" [value]="imgService.saveb" (change)="imgService.toggleSave('b')">
-              &nbsp; Save PNG
-          </mat-radio-button>
-      </mat-radio-group>-->
       </mat-card>
       <mat-card class="example-container" *ngIf="imgService.remoteImg" style="margin-top: 5%;">
       <img class="example-card" [src]="imgService.remoteImg" id="image" />
       <button mat-button (click)="imgService.scanCard('s')">
            Scan Remote
        </button>
-      <!--<mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group">
-        <mat-radio-button class="example-radio-button"
-            [value]="imgService.saves" (change)="imgService.toggleSave('s')">
-              &nbsp; Save PNG
-          </mat-radio-button>
-        </mat-radio-group>-->
     </mat-card>
 </div>

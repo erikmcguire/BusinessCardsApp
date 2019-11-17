@@ -14,21 +14,19 @@ required></mat-form-field>
     </button>
 </mat-card><br>
 <mat-card>
-<mat-radio-group
-  aria-labelledby="example-radio-group-label"
-  class="example-radio-group" >
-    <mat-radio-button class="example-radio-button" *ngFor="let lt of ltypes" (change)="changePH(lt); toggleGoogle(lt)" [value]="lt">
-        {{lt}}
-    </mat-radio-button>
-    <button mat-button class="example-container" *ngIf="g"
-       (click)="login('', '')">
-       <mat-icon>input</mat-icon> Sign-In
-    </button>
-</mat-radio-group>
-
+    <mat-radio-group
+      aria-labelledby="example-radio-group-label"
+      class="example-radio-group" >
+        <mat-radio-button class="example-radio-button" *ngFor="let lt of ltypes" (change)="changePH(lt); toggleGoogle(lt)" [value]="lt">
+            {{lt}}
+        </mat-radio-button>
+        <button mat-button class="example-container" *ngIf="g"
+           (click)="login('', '')">
+           <mat-icon>input</mat-icon> Sign-In
+        </button>
+    </mat-radio-group>
 </mat-card>
 </div>
-
 <ng-template #elseBlock>
     <mat-card>
         <mat-card-subtitle>
@@ -38,7 +36,5 @@ required></mat-form-field>
             <a mat-button href (click)="logout()"><mat-icon>exit_to_app</mat-icon> Log Out</a>
         </mat-card-content>
     </mat-card>
-
-
 </ng-template>
 </div>

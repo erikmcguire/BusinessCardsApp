@@ -4,7 +4,6 @@ import { Http } from '@angular/http';
 import domtoimage from 'dom-to-image';
 import { Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
-import { AppService } from './app.service';
 import { Router } from '@angular/router';
 import { Card } from './card.model';
 
@@ -15,47 +14,25 @@ export class ImageService implements OnInit, OnDestroy {
     localImg = 'assets/images/bateman.png';
     remoteImg = '';
     base64: string;
-    saveb: boolean = false;
-    saves: boolean = false;
     hsubscription: Subscription;
     esubscription: Subscription;
     filledCard: Card = new Card();
     fromScan: boolean = false;
     constructor(public http: Http,
                 private authService: AuthService,
-                private appService: AppService,
                 private router: Router) { }
 
   convertToBase64() {
      const imgNode = document.getElementById(`image`);
      domtoimage.toPng(imgNode)
                      .then( (dataUrl: string) => {
-                             if (this.saveb) {
-                                this.saveImg(dataUrl, 'b');
-                             }
-                             this.base64 = dataUrl;
-                             this.scanCard();
+                         this.base64 = dataUrl;
+                         this.scanCard();
                       }).catch( (e: any) => {
                                  console.log(e);
                             });
    }
 
-    saveImg(dataUrl, t) {
-        this.toggleSave(t);
-        let link = document.createElement('a');
-        link.download = `snapshot${new Date()
-                                   .getTime()}.png`;
-        link.href = dataUrl;
-        link.click();
-    }
-
-  toggleSave(t) {
-      if (t === 'b') {
-        this.saveb = !this.saveb;
-    } else if (t === 's') {
-        this.saves = !this.saves;
-    }
-  }
 
   displayCardImg(card: Card) {
       if (card.imageUri) {
@@ -63,10 +40,7 @@ export class ImageService implements OnInit, OnDestroy {
       } else return "";
   }
 
-  scanCard(image64?: string, t?: string) {
-      if (this.saves && !this.base64 && image64) {
-         this.saveImg(image64, t);
-      }
+  scanCard(image64?: string) {
       if (image64 == 's') {
             const request: any = {
               'requests': [
