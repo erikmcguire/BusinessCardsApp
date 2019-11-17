@@ -13,7 +13,7 @@ import { Card } from './card.model';
 })
 export class ImageService implements OnInit, OnDestroy {
     localImg = 'assets/images/bateman.png';
-    remoteImg = 'https://i.pinimg.com/originals/26/b6/84/26b684bb28d44c7da4d83596ebd424a6.png';
+    remoteImg = '';
     base64: string;
     saveb: boolean = false;
     saves: boolean = false;
@@ -67,7 +67,7 @@ export class ImageService implements OnInit, OnDestroy {
       if (this.saves && !this.base64 && image64) {
          this.saveImg(image64, t);
       }
-      if (!this.base64 && image64 == 's') {
+      if (image64 == 's') {
             const request: any = {
               'requests': [
                   {'image': {'source': {'imageUri': this.remoteImg}

@@ -29,7 +29,7 @@ export class WebcamComponent implements OnInit, OnDestroy {
 
     setImage(imageUri: string): boolean {
         if (imageUri.search("http") != -1) {
-            this.imgService.remoteImg = imageUri;
+            this.imgService.remoteImg = `${imageUri}`;
         } else {
             this.imgService.localImg = `${imageUri}`;
         }

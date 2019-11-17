@@ -31,28 +31,31 @@
         <mat-icon>add_photo_alternate</mat-icon> Add Page
     </button><br>
         </mat-card>
-    <mat-card class="example-container" style="margin-top: 5%;">
+    <mat-card class="example-container" *ngIf="imgService.localImg" style="margin-top: 5%;">
         <img [src]="imgService.localImg" id="image" />
       <button mat-button (click)="imgService.convertToBase64();" id="convert">
           Scan Local
       </button>
-      <mat-radio-group
+      <!--<mat-radio-group
         aria-labelledby="example-radio-group-label"
         class="example-radio-group" >
-              <mat-radio-button class="example-radio-button" [value]="imgService.saveb" (change)="imgService.toggleSave('b')">
+            <mat-radio-button class="example-radio-button" [value]="imgService.saveb" (change)="imgService.toggleSave('b')">
               &nbsp; Save PNG
           </mat-radio-button>
-      </mat-radio-group>
+      </mat-radio-group>-->
+      </mat-card>
+      <mat-card class="example-container" *ngIf="imgService.remoteImg" style="margin-top: 5%;">
+      <img class="example-card" [src]="imgService.remoteImg" id="image" />
       <button mat-button (click)="imgService.scanCard('s')">
            Scan Remote
        </button>
-      <mat-radio-group
+      <!--<mat-radio-group
         aria-labelledby="example-radio-group-label"
         class="example-radio-group">
         <mat-radio-button class="example-radio-button"
             [value]="imgService.saves" (change)="imgService.toggleSave('s')">
               &nbsp; Save PNG
           </mat-radio-button>
-        </mat-radio-group>
+        </mat-radio-group>-->
     </mat-card>
 </div>
