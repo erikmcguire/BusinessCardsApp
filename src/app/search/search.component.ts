@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     showResults: boolean = false;
     fn: boolean = false;
     org: boolean = false;
+    stypes: string[] = ['First Name', 'Organization'];
     t: string = "";
     placeholder = "First Name";
   constructor(private authService: AuthService,
@@ -27,10 +28,12 @@ export class SearchComponent implements OnInit, OnDestroy {
           }
 
   toggleSearch(t) {
-      if (t === 'firstName') {
-        this.fn = !this.fn;
-    } else if (t === 'organization') {
-        this.org = !this.org;
+      if (t === 'First Name') {
+        this.fn = true;
+        this.org = false;
+    } else if (t === 'Organization') {
+        this.org = true
+        this.fn = false;
     }
   }
   changePH(t) {

@@ -15,49 +15,45 @@
 </mat-card-content>
 </mat-card>
 <div class="example-container centerd">
-<button mat-button id="snap" class="centerd" (click)="toggleCamera()">
-    Toggle Camera
-</button>
-</div>
-<div id="webcam">
-    <div class="img">
-            <img [src]="imgService.localImg" id="image" />
-            <div class="centerd">
-              <button mat-button (click)="imgService.convertToBase64()">
-                  Base 64
-              </button>
-              <mat-radio-group
-                aria-labelledby="example-radio-group-label"
-                class="example-radio-group" >
-                      <mat-radio-button class="example-radio-button" [value]="imgService.saveb" (change)="imgService.toggleSave('b')">
-                      &nbsp; Save PNG
-                  </mat-radio-button>
-              </mat-radio-group>
-              <button mat-button (click)="imgService.scanCard('s')">
-                   Scan
-               </button>
-              <mat-radio-group
-                aria-labelledby="example-radio-group-label"
-                class="example-radio-group">
-                <mat-radio-button class="example-radio-button"
-                    [value]="imgService.saves" (change)="imgService.toggleSave('s')">
-                      &nbsp; Save PNG
-                  </mat-radio-button>
-                </mat-radio-group>
-            </div>
-    </div>
-    <div *ngIf="toggleCam">
-        <video id="video" width="640" height="480" autoplay #video></video>
-    </div>
-    <div>
+    <button mat-button id="snap" class="centerd" (click)="toggleCamera()">
+        Toggle Camera
+    </button>
+    <mat-card>
+        <video id="video" autoplay height="640" width="480" #video></video>
+        <br>
         <button mat-button id="snap" (click)="snap()">
-            Snap Photo
-        </button>
+        <mat-icon>add_photo_alternate</mat-icon> Snap Photo
+    </button>
+    </mat-card>
+    <mat-card>
+        <canvas #canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+        <img *ngIf="photo" src="{{photo.src}}" class="example-card"><br>
+        <button mat-button id="snap" (click)="imgService.navAdd()">
+        <mat-icon>add_photo_alternate</mat-icon> Add Page
+    </button><br>
+        <img [src]="imgService.localImg" id="image" />
+    </mat-card>
+    <div class="centerd">
+      <button mat-button (click)="imgService.convertToBase64()">
+          Convert to Base 64
+      </button>
+      <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group" >
+              <mat-radio-button class="example-radio-button" [value]="imgService.saveb" (change)="imgService.toggleSave('b')">
+              &nbsp; Save PNG
+          </mat-radio-button>
+      </mat-radio-group>
+      <button mat-button (click)="imgService.scanCard('s')">
+           Scan
+       </button>
+      <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group">
+        <mat-radio-button class="example-radio-button"
+            [value]="imgService.saves" (change)="imgService.toggleSave('s')">
+              &nbsp; Save PNG
+          </mat-radio-button>
+        </mat-radio-group>
     </div>
-    <canvas id="canvas" width="640" height="480" #canvas ></canvas>
-    <ul>
-        <li *ngIf="photo">
-            <img src="{{ photo.src }}"/>
-        </li>
-    </ul>
 </div>

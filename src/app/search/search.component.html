@@ -12,12 +12,10 @@
   <mat-radio-group
     aria-labelledby="example-radio-group-label"
     class="example-radio-group" >
-          <mat-radio-button class="example-radio-button" [value]="fn" (change)="changePH('First Name'); toggleSearch('firstName')">
-          First Name
-      </mat-radio-button><br>
-          <mat-radio-button class="example-radio-button" [value]="org" (change)="changePH('Organization'); toggleSearch('organization')">
-          Organization
-      </mat-radio-button>
+    <mat-radio-button class="example-radio-button" *ngFor="let st of stypes" (change)="changePH(st); toggleSearch(st)" [value]="st">
+  {{st}}&nbsp;
+</mat-radio-button>
+
   </mat-radio-group>
   </mat-card><br>
 <div class="example-container centerd" *ngIf="showResults" style="margin-top: 20%;">

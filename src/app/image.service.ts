@@ -20,6 +20,7 @@ export class ImageService implements OnDestroy {
     hsubscription: Subscription;
     esubscription: Subscription;
     filledCard: Card = new Card();
+    fromScan: boolean = false;
   constructor(public http: Http, private authService: AuthService,
               private appService: AppService,
               private router: Router) { }
@@ -75,7 +76,14 @@ export class ImageService implements OnDestroy {
                ]};
         const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + environment.cloudVision;
         this.hsubscription = this.http.post(url, request).subscribe( (results: any) => {
-            this.getEntities(results.json().responses[0].fullTextAnnotation.text);
+            if (results.json().responses[0].fullTextAnnotation) {
+              let txt = results.json().responses[0].fullTextAnnotation.text;
+              console.log("Entities: ", txt);
+              this.getEntities(txt);
+          } else {
+              let txt = "";
+              this.getEntities(txt);
+          }
         });
     } else if (image64 && image64.length >= 2) {
             const request: any = {
@@ -85,7 +93,14 @@ export class ImageService implements OnDestroy {
           'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]}]};
           const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + environment.cloudVision;
           this.hsubscription = this.http.post(url, request).subscribe( (results: any) => {
-                this.getEntities(results.json().responses[0].fullTextAnnotation.text);
+              if (results.json().responses[0].fullTextAnnotation) {
+                let txt = results.json().responses[0].fullTextAnnotation.text;
+                console.log("Entities: ", txt);
+                this.getEntities(txt);
+            } else {
+                let txt = "";
+                this.getEntities(txt);
+            }
                 });
     } else { const request: any = {
                 'requests': [{
@@ -93,8 +108,16 @@ export class ImageService implements OnDestroy {
                         'content': this.base64.replace(/.*base64\,/, "")},
       'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]}]};
       const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + environment.cloudVision;
-      this.hsubscription = this.http.post(url, request).subscribe( (results: any) => {
-            this.getEntities(results.json().responses[0].fullTextAnnotation.text);
+      this.hsubscription = this.http.post(url, request).subscribe(
+           (results: any) => {
+          if (results.json().responses[0].fullTextAnnotation) {
+            let txt = results.json().responses[0].fullTextAnnotation.text;
+            console.log("Entities: ", txt);
+            this.getEntities(txt);
+        } else {
+            let txt = "";
+            this.getEntities(txt);
+        }
             });
       }
   }
@@ -115,6 +138,9 @@ export class ImageService implements OnDestroy {
 
   }
 
+  toTitle(el): string {
+      return el[0].toUpperCase() + el.slice(1).toLowerCase()
+  }
 
   fillEnts(ents: any) {
     let businessCard: any = {};
@@ -122,12 +148,15 @@ export class ImageService implements OnDestroy {
     businessCard.author = this.authService.afAuth.auth.currentUser.uid;
     businessCard.addedAt = Date.now();
     businessCard.imageUri = this.base64 || this.remoteImg;
-    ents.forEach(el => {if (el.type === "PERSON")
-                            { businessCard.firstName = el.name.split(" ")[0];
-                              businessCard.lastName = el.name.split(" ")[1]
+    ents.forEach(el => {
+                    if (el.type === "PERSON") {
+                        businessCard.firstName =
+                            this.toTitle(el.name.split(" ")[0])
+                        businessCard.lastName =
+                            this.toTitle(el.name.split(" ")[1])
                           }
                     else if (el.type === "ORGANIZATION") {
-                        businessCard.organization = el.name;
+                        businessCard.organization = this.toTitle(el.name);
                     } else if (el.type === "PHONE_NUMBER") {
                         businessCard.phone = el.name;
                     }
@@ -138,9 +167,15 @@ export class ImageService implements OnDestroy {
                     }
                 });
     this.filledCard = businessCard;
-    this.router.navigate(['/add-card']);
+    if (!this.fromScan) {
+        this.router.navigate(['/add-card']);
+    } else {
+        this.fromScan = false;
+    }
   }
-
+  navAdd() {
+      this.router.navigate(['/add-card']);
+  }
   ngOnDestroy() {
       this.esubscription.unsubscribe();
       this.hsubscription.unsubscribe();

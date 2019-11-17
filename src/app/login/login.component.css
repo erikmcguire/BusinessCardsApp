@@ -2,3 +2,17 @@
   display: flex;
   flex-direction: column;
 }
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+.centerd {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}

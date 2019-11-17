@@ -2,13 +2,15 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from  "@angular/fire/auth";
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { auth } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService implements OnDestroy {
   asubscription: Subscription;
-  constructor(public afAuth: AngularFireAuth, private router: Router) {
+  constructor(public afAuth: AngularFireAuth,
+              private router: Router) {
       this.asubscription = this.afAuth.authState.subscribe(user => {
         if (user)
           {
@@ -16,9 +18,15 @@ export class AuthService implements OnDestroy {
           }
       }) }
 
-  login(email: string, password: string): Promise<firebase.auth.UserCredential> {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
+  login(t: string, email: string, password: string): Promise<firebase.auth.UserCredential> {
+    if (t == "google") {
+        return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    } else if (t == "ep") {
+        return this.afAuth.auth.signInWithEmailAndPassword(email, password);
+    }
   }
+
+
 
   logout(): boolean {
     this.afAuth.auth.signOut().then(() => {;

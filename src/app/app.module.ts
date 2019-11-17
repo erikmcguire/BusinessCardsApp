@@ -50,6 +50,7 @@ import { ReversePipe } from './businesscard/reverseCards.pipe';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase,
                                     'business-cards-app'),
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireAuthModule,

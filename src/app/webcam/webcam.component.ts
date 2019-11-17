@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ImageService } from '../image.service';
 
 @Component({
@@ -6,17 +6,23 @@ import { ImageService } from '../image.service';
   templateUrl: './webcam.component.html',
   styleUrls: ['./webcam.component.css']
 })
-export class WebcamComponent implements OnInit {
+export class WebcamComponent implements OnInit, OnDestroy {
 
     video: HTMLVideoElement;
     canvas: HTMLCanvasElement;
     photo: HTMLImageElement;
-    toggleCam: boolean = false;
-
+    toggleCam: boolean;
+    stream: MediaStream = null;
     constructor(private imgService: ImageService) {
+        this.toggleCam = false;
     }
 
     ngOnInit() {
+        this.video = document.querySelector('video');
+    }
+
+    ngOnDestroy() {
+        this.stopCamera();
     }
 
     setImage(imageUri: string): boolean {
@@ -27,24 +33,29 @@ export class WebcamComponent implements OnInit {
         }
         return false;
     }
+
+    stopCamera() {
+        this.video.srcObject = null;
+        let vd = document.getElementById('video');
+        vd.style.display = "none";
+        if (this.stream && this.stream.getTracks) {
+            this.stream.getTracks().forEach((track: MediaStreamTrack) => { track.stop()});
+        }
+    }
     toggleCamera() {
-        if (!this.toggleCam) {
-            this.toggleCam = true;
-            this.video = document.querySelector('video');
-            if (navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: true }).then(
-                    (stream) => {
-                        this.video.srcObject = stream},
-                        err => { console.log(err) });
-            }
-        } else if (this.toggleCam) {
-            this.toggleCam = false;
-            if (navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({video: true})
-                .then(stream => {
-                      stream.getTracks()[0].stop();
-                     },
-                    err => { console.log(err) });
+        this.toggleCam = !this.toggleCam;
+        if (navigator.mediaDevices.getUserMedia) {
+            let vd = document.getElementById('video');
+            vd.style.display = "block";
+            if (this.toggleCam) {
+                    navigator.mediaDevices.getUserMedia({ video: true }).then(
+                        (stream) => {
+                            this.stream = stream;
+                            this.video.srcObject = stream;
+                        }, err => { console.log(err) });
+
+            } else {
+                this.stopCamera();
             }
         }
     }
@@ -54,6 +65,7 @@ export class WebcamComponent implements OnInit {
         this.canvas.getContext('2d').drawImage(this.video, 0, 0, 640, 480);
         this.photo = document.createElement('img');
         this.photo.setAttribute('src', this.canvas.toDataURL('image/png'));
+        this.imgService.fromScan = true;
         this.imgService.scanCard(this.photo.src);
     }
 
