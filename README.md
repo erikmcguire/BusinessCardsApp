@@ -116,7 +116,7 @@
 #### Extras
 * Material design
 * Animations
-* Composite Firebase indices for search (unique, sorted, case insensitive, trimmed)
+* Composite Firebase indices for search (unique, sorted, case insensitive)
 * Firebase rules for unique users
 * Google Analytics
     - Login event w/ user
