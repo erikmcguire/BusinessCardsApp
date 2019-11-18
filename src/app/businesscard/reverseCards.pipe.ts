@@ -4,6 +4,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 export class ReversePipe implements PipeTransform {
   transform(cards) {
-      if (cards) return cards.reverse();
+      if (cards) {
+          return cards.reverse();
+      }
     }
 }

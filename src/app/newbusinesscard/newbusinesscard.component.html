@@ -1,6 +1,6 @@
 <div class="centerd example-container" style="margin-top: 10%;" >
 
-<form class="example-form centerd">
+<form class="example-form">
     <mat-card>
         <mat-form-field>
         <input matInput name="firstName" placeholder="First Name" id="firstName" value="{{imgService.filledCard.firstName || ''}}" #firstName>
@@ -28,9 +28,27 @@
                 >
             <mat-icon class="icon" matPrefix>add_circle</mat-icon> Add
         </button>
-    <button mat-button style="float: right;" (click)="clearForm()"
+    <button mat-button style="float: right;" type="reset" (click)="clearForm()"
             >
         <mat-icon class="icon" matPrefix>clear_all</mat-icon> Clear
     </button></div>
+    </mat-card>
+    <mat-card class="example-container"
+              *ngIf="imgService.txtano"
+              style="margin-top: 10%;">
+        <mat-card-header>
+            <h5 matLine>Scan Results</h5>
+        </mat-card-header>
+        <mat-card-content>
+        <p matLine>
+        <mat-divider></mat-divider>
+            <textarea matInput rows="10">
+                {{imgService.txtano}}
+            </textarea>
+        </p>
+        </mat-card-content>
+        <mat-card-footer>
+            (See console log for entities.)
+        </mat-card-footer>
     </mat-card>
 </form>

@@ -18,6 +18,7 @@ export class ImageService implements OnInit, OnDestroy {
     esubscription: Subscription;
     filledCard: Card = new Card();
     fromScan: boolean = false;
+    txtano: string;
     constructor(public http: Http,
                 private authService: AuthService,
                 private router: Router) { }
@@ -69,7 +70,7 @@ export class ImageService implements OnInit, OnDestroy {
            (results: any) => {
           if (results.json().responses[0].fullTextAnnotation) {
             let txt = results.json().responses[0].fullTextAnnotation.text;
-            console.log("Full text annotation: ", results.json().responses[0].fullTextAnnotation.text);
+            this.txtano = "\n" + results.json().responses[0].fullTextAnnotation.text;
             this.getEntities(txt);
         } else {
             let txt = "";
@@ -105,28 +106,33 @@ export class ImageService implements OnInit, OnDestroy {
     businessCard.addedAt = Date.now();
     businessCard.imageUri = this.base64 || this.remoteImg;
     ents.forEach(el => {
-                    if (el.type === "PERSON") {
+                    if (el.type === "PERSON" && el.name.search(" ") != -1
+                        && !businessCard.firstName && !businessCard.lastName) {
                         businessCard.firstName =
                             this.toTitle(el.name.split(" ")[0])
                         businessCard.firstNameLower = businessCard.firstName.toLowerCase()
                         businessCard.lastName =
-                            el.name.split(" ").slice(1).map(w => this.toTitle(w)).join(" ")
-                          }
-                    else if (el.type === "ORGANIZATION") {
+                            el.name.split(" ").slice(1).map(w => this.toTitle(w)).join(" ");
+                        } else if (el.type === "PERSON" && !businessCard.firstName) {
+                            businessCard.firstName = this.toTitle(el.name);
+                            businessCard.firstNameLower = businessCard.firstName.toLowerCase()
+                        }
+                    else if (el.type === "ORGANIZATION" && !businessCard.organization) {
                         businessCard.organization = el.name.split(" ").map(w => this.toTitle(w)).join(" ");
                         businessCard.orgLower = businessCard.organization.toLowerCase()
-                    } else if (el.type === "PHONE_NUMBER") {
+                    } else if (el.type === "PHONE_NUMBER" && !businessCard.phone) {
                         businessCard.phone = el.name;
-                    } else if (el.type === "LOCATION" && el.name.search(/[0-9]/) != -1 || el.type === "ADDRESS") {
-                        businessCard.address = el.name.split(" ").map(w => this.toTitle(w)).join(" ");
+                    } else if ((el.type === "ADDRESS" || el.type === "LOCATION") && el.name.search(/[0-9]/) != -1) {
+                        businessCard.address = el.name.split(" ").map(w => this.toTitle(w)).join(" ").replace(/,/, "");
                     } else if (el.type === "LOCATION" || el.type === "ADDRESS") {
                             if (!businessCard.address && el.metadata.wikipedia_url) {
-                                businessCard.address = el.name.split(" ").map(w => this.toTitle(w)).join(" ");
+                                businessCard.address = el.name.split(" ").map(w => this.toTitle(w)).join(" ").replace(/,/, "");
                             }
-                    } else if (el.type.search("@") != -1) {
+                    } else if (el.type.search("@") != -1 && !businessCard.email) {
                         businessCard.email = el.name;
                     }
                 });
+
     this.filledCard = businessCard;
     if (!this.fromScan) {
         this.router.navigate(['/add-card']);
@@ -145,6 +151,7 @@ export class ImageService implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+      console.log("Unsubscribing");
       this.esubscription.unsubscribe();
       this.hsubscription.unsubscribe();
   }

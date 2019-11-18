@@ -12,7 +12,6 @@ import { Card } from '../card.model';
 })
 export class NewbusinesscardComponent implements OnInit {
     card: any;
-
     constructor(private appService: AppService,
                 private imgService: ImageService,
                 private authService: AuthService,
@@ -45,9 +44,9 @@ export class NewbusinesscardComponent implements OnInit {
       }
 
     clearForm() {
-       this.imgService.filledCard = new Card();
-       this.imgService.base64 = null;
-       return false;
+        this.imgService.filledCard = new Card();
+        this.imgService.base64 = null;
+        return "";
       }
 
     ngOnInit() {

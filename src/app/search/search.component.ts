@@ -22,23 +22,23 @@ export class SearchComponent implements OnInit, OnDestroy {
     stypes: string[] = ['First Name', 'Organization'];
     t: string = "";
     placeholder = "First Name";
-  constructor(private authService: AuthService,
-              private imgService: ImageService,
-              private afs: AngularFirestore) {
-          }
+    constructor(private authService: AuthService,
+                private imgService: ImageService,
+                private afs: AngularFirestore) {
+        }
 
-  toggleSearch(t) {
-      if (t === 'First Name') {
-        this.fn = true;
-        this.org = false;
-    } else if (t === 'Organization') {
-        this.org = true
-        this.fn = false;
+    toggleSearch(t) {
+        if (t === 'First Name') {
+            this.fn = true;
+            this.org = false;
+        } else if (t === 'Organization') {
+            this.org = true
+            this.fn = false;
+        }
     }
-  }
-  changePH(t) {
-      this.placeholder = t;
-  }
+    changePH(t) {
+        this.placeholder = t;
+    }
     searchCards(query): boolean {
         if (!query) return false;
         if (this.fn) {
@@ -69,14 +69,14 @@ export class SearchComponent implements OnInit, OnDestroy {
        return false;
    }
 
-   displayCardImg(card) {
-       this.imgService.displayCardImg(card);
-   }
+    displayCardImg(card) {
+        this.imgService.displayCardImg(card);
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  ngOnDestroy() {
-      this.showResults = false;
-  }
+    ngOnDestroy() {
+        this.showResults = false;
+    }
 }

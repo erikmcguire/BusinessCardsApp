@@ -1,21 +1,37 @@
-<mat-toolbar mat-scroll-shrink class="mat-elevation-z4"
-             style="z-index: 1; position: fixed;"
-             >
+<mat-toolbar mat-scroll-shrink
+             class="mat-elevation-z4"
+             style="z-index: 1; position: fixed;">
     <div id="dashboard" class="md-toolbar-tools">
     <nav mat-tab-nav-bar>
-    <a mat-tab-link routerLink="/add-card" routerLinkActive="active">
-            <mat-icon class="icon" matPrefix>person_add</mat-icon>Add Card
-        </a>
         <a mat-tab-link routerLink="/search" routerLinkActive="active">
-            <mat-icon class="icon" matPrefix>search</mat-icon>Search
+            <mat-icon class="icon" matPrefix>
+                search
+            </mat-icon>
+            Search
+        </a>
+        <a mat-tab-link routerLink="/add-card" routerLinkActive="active">
+            <mat-icon class="icon" matPrefix>
+                person_add
+            </mat-icon>
+            Add Card
         </a>
         <a mat-tab-link routerLink="/webcam" routerLinkActive="active">
-            <mat-icon class="icon" matPrefix>camera</mat-icon>Scan
+            <mat-icon class="icon" matPrefix>
+                camera
+            </mat-icon>
+            Scan
         </a>
-        <a mat-tab-link routerLink="/card" routerLinkActive="active"><mat-icon class="icon" matPrefix>import_contacts</mat-icon>Contacts
+        <a mat-tab-link routerLink="/card" routerLinkActive="active">
+            <mat-icon class="icon" matPrefix>
+                import_contacts
+            </mat-icon>
+            Contacts
         </a>
         <a mat-tab-link routerLink="/login" routerLinkActive="active">
-            <mat-icon class="icon" matPrefix>exit_to_app</mat-icon>Log in/out
+            <mat-icon class="icon" matPrefix>
+                exit_to_app
+            </mat-icon>
+            Log in/out
         </a>
         </nav>
     </div>
