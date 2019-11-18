@@ -23,26 +23,26 @@ export class ImageService implements OnInit, OnDestroy {
                 private authService: AuthService,
                 private router: Router) { }
 
-  convertToBase64() {
-     const imgNode = document.getElementById(`image`);
-     domtoimage.toPng(imgNode)
-                     .then( (dataUrl: string) => {
-                         this.base64 = dataUrl;
-                         this.scanCard();
-                      }).catch( (e: any) => {
-                                 console.log(e);
-                            });
-   }
+    convertToBase64() {
+        const imgNode = document.getElementById('image');
+        domtoimage.toPng(imgNode)
+                        .then( (dataUrl: string) => {
+                            this.base64 = dataUrl;
+                            this.scanCard();
+                        }).catch( (e: any) => {
+                                  console.log(e);
+                                 });
+      }
 
 
-  displayCardImg(card: Card) {
+    displayCardImg(card: Card) {
       if (card.imageUri) {
           return card.imageUri;
       } else return "";
-  }
+    }
 
-  scanCard(image64?: string) {
-      if (image64 == 's') {
+    scanCard(image64?: string) {
+        if (image64 == 's') {
             const request: any = {
               'requests': [
                   {'image': {'source': {'imageUri': this.remoteImg}
@@ -50,39 +50,39 @@ export class ImageService implements OnInit, OnDestroy {
               'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]
                   }
                ]};
-        this.makeRequest(request);
-    } else if (image64 && image64.length >= 2) {
-            const request: any = {
-                'requests': [{'image': {'content': image64.replace(/.*base64\,/, "")},
-          'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]}]};
-           this.makeRequest(request);
-    } else {
-        const request: any = {
-            'requests': [{'image': {'content': this.base64.replace(/.*base64\,/, "")},
-      'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]}]};
-      this.makeRequest(request);
-      }
-  }
-
-  makeRequest(request) {
-      const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + environment.cloudVision;
-      this.hsubscription = this.http.post(url, request).subscribe(
-           (results: any) => {
-          if (results.json().responses[0].fullTextAnnotation) {
-            let txt = results.json().responses[0].fullTextAnnotation.text;
-            this.txtano = "\n" + results.json().responses[0].fullTextAnnotation.text;
-            this.getEntities(txt);
+            this.makeRequest(request);
+        } else if (image64 && image64.length >= 2) {
+                const request: any = {
+                    'requests': [{'image': {'content': image64.replace(/.*base64\,/, "")},
+              'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]}]};
+               this.makeRequest(request);
         } else {
-            let txt = "";
-            console.log("Nothing found.", request);
-            this.getEntities(txt);
+            const request: any = {
+                'requests': [{'image': {'content': this.base64.replace(/.*base64\,/, "")},
+                'features': [{ 'type': 'TEXT_DETECTION', 'maxResults': 1 }]}]};
+            this.makeRequest(request);
+            }
         }
-            });
-  }
 
-  getEntities(text: string) {
-      const url = 'https://language.googleapis.com/v1/documents:analyzeEntities?key=' + environment.cloudVision;
-      const request: any = {
+    async makeRequest(request) {
+        const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + environment.cloudVision;
+        this.hsubscription = await this.http.post(url, request).subscribe(
+               (results: any) => {
+              if (results.json().responses[0].fullTextAnnotation) {
+                let txt = results.json().responses[0].fullTextAnnotation.text;
+                this.txtano = "\n" + results.json().responses[0].fullTextAnnotation.text;
+                this.getEntities(txt);
+            } else {
+                let txt = "";
+                console.log("Nothing found.", request);
+                this.getEntities(txt);
+            }
+                });
+    }
+
+    async getEntities(text: string) {
+        const url = 'https://language.googleapis.com/v1/documents:analyzeEntities?key=' + environment.cloudVision;
+        const request: any = {
              "encodingType": "UTF8",
              "document":
              {
@@ -90,69 +90,88 @@ export class ImageService implements OnInit, OnDestroy {
              "content": text
              }
          }
-      this.esubscription = this.http.post(url, request).subscribe( (results: any) => {
-            console.log("Entities: ", results.json().entities);
+        this.esubscription = await this.http.post(url, request).subscribe( (results: any) => {
+            console.log("Entities: ", "\n", results.json().entities);
             this.fillEnts(results.json().entities);
             });
-  }
+    }
 
-  toTitle(el): string {
-      return el.charAt(el.search(/[^A-z0-9]/)) + " " + el.charAt(el.search(/[A-z]/)).toUpperCase() + el.slice(el.search(/[A-z]/) + 1).toLowerCase()
-  }
+    toTitle(el): string {
+        return el.charAt(el.search(/[^A-z0-9]/)) + " " + el.charAt(el.search(/[A-z]/)).toUpperCase() + el.slice(el.search(/[A-z]/) + 1).toLowerCase()
+    }
 
-  fillEnts(ents: any) {
-    let businessCard: any = {};
-    businessCard.author = this.authService.afAuth.auth.currentUser.uid;
-    businessCard.addedAt = Date.now();
-    businessCard.imageUri = this.base64 || this.remoteImg;
-    ents.forEach(el => {
-                    if (el.type === "PERSON" && el.name.search(" ") != -1
-                        && !businessCard.firstName && !businessCard.lastName) {
+        fillEnts(ents: any) {
+        let businessCard: any = {};
+        businessCard.author = this.authService.afAuth.auth.currentUser.uid;
+        businessCard.addedAt = Date.now();
+        businessCard.imageUri = this.base64 || this.remoteImg;
+        ents.forEach(el => {
+            switch(el.type) {
+                case "PERSON":
+                    if (el.name.search(" ") != -1
+                        && !businessCard.firstName
+                        && !businessCard.lastName) {
                         businessCard.firstName =
                             this.toTitle(el.name.split(" ")[0])
                         businessCard.firstNameLower = businessCard.firstName.toLowerCase()
                         businessCard.lastName =
                             el.name.split(" ").slice(1).map(w => this.toTitle(w)).join(" ");
-                        } else if (el.type === "PERSON" && !businessCard.firstName) {
-                            businessCard.firstName = this.toTitle(el.name);
-                            businessCard.firstNameLower = businessCard.firstName.toLowerCase()
-                        }
-                    else if (el.type === "ORGANIZATION" && !businessCard.organization) {
-                        businessCard.organization = el.name.split(" ").map(w => this.toTitle(w)).join(" ");
+                    } else if (!businessCard.firstName) {
+                        businessCard.firstName = this.toTitle(el.name);
+                        businessCard.firstNameLower = businessCard.firstName.toLowerCase()
+                    } break;
+                case "ORGANIZATION":
+                    if (!businessCard.organization) {
+                        businessCard.organization = el.name.split(" ")
+                        .map(w => this.toTitle(w)).join(" ");
                         businessCard.orgLower = businessCard.organization.toLowerCase()
-                    } else if (el.type === "PHONE_NUMBER" && !businessCard.phone) {
+                    } break;
+                case "PHONE_NUMBER":
+                    if (!businessCard.phone) {
                         businessCard.phone = el.name;
-                    } else if ((el.type === "ADDRESS" || el.type === "LOCATION") && el.name.search(/[0-9]/) != -1) {
-                        businessCard.address = el.name.split(" ").map(w => this.toTitle(w)).join(" ").replace(/,/, "");
-                    } else if (el.type === "LOCATION" || el.type === "ADDRESS") {
-                            if (!businessCard.address && el.metadata.wikipedia_url) {
-                                businessCard.address = el.name.split(" ").map(w => this.toTitle(w)).join(" ").replace(/,/, "");
-                            }
-                    } else if (el.type.search("@") != -1 && !businessCard.email) {
-                        businessCard.email = el.name;
+                    } break;
+                case "LOCATION":
+                case "ADDRESS":
+                    if (el.name.search(/[0-9]/) != -1) {
+                        businessCard.address = el.name.split(" ")
+                        .map(w => this.toTitle(w))
+                        .join(" ").replace(/,/, "");
+                        break;
+                    } else if (!businessCard.address &&
+                               el.metadata.wikipedia_url) {
+                               businessCard.address = el.name.split(" ")
+                               .map(w => this.toTitle(w)).join(" ")
+                               .replace(/,/, "");
+                               break;
                     }
-                });
-
-    this.filledCard = businessCard;
-    if (!this.fromScan) {
-        this.router.navigate(['/add-card']);
-    } else {
-        this.fromScan = false;
+                default:
+                    if (el.type.search("@") != -1
+                        && !businessCard.email) {
+                        businessCard.email = el.name;
+                        break;
+                    }
+            }
+        });
+        this.filledCard = businessCard;
+        if (!this.fromScan) {
+            this.router.navigate(['/add-card']);
+        } else {
+            this.fromScan = false;
+        }
     }
-  }
 
-  ngOnInit() {
-      this.hsubscription = null;
-      this.esubscription = null;
-  }
+    ngOnInit() {
+        this.hsubscription = null;
+        this.esubscription = null;
+    }
 
-  navAdd() {
-      this.router.navigate(['/add-card']);
-  }
+    navAdd() {
+        this.router.navigate(['/add-card']);
+    }
 
-  ngOnDestroy() {
-      console.log("Unsubscribing");
-      this.esubscription.unsubscribe();
-      this.hsubscription.unsubscribe();
-  }
+    ngOnDestroy() {
+        console.log("Unsubscribing");
+        this.esubscription.unsubscribe();
+        this.hsubscription.unsubscribe();
+    }
 }

@@ -11,7 +11,7 @@ import { auth } from 'firebase/app';
 export class AuthService implements OnDestroy {
   asubscription: Subscription;
   constructor(public afAuth: AngularFireAuth,
-              private router: Router) {
+              private router: Router,) {
       this.asubscription = this.afAuth.authState.subscribe(user => {
         if (user)
           {
@@ -26,8 +26,6 @@ export class AuthService implements OnDestroy {
         return this.afAuth.auth.signInWithEmailAndPassword(email, password);
     }
   }
-
-
 
   logout(): boolean {
     this.afAuth.auth.signOut().then(() => {;

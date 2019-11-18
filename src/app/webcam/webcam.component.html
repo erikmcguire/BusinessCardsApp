@@ -55,7 +55,8 @@
     </button>
     <br>
     </mat-card>
-    <mat-card class="example-container" *ngIf="imgService.localImg" style="margin-top: 5%;">
+    <mat-card class="example-container" *ngIf="imgService.localImg"
+              style="margin-top: 5%;">
         <img [src]="imgService.localImg"
              style="border-radius: 5px; border: 1px solid #ccc;"
              id="image"/>
@@ -69,9 +70,10 @@
       <mat-card class="example-container"
                 *ngIf="imgService.remoteImg"
                 style="margin-top: 5%;">
-      <img class="example-card" [src]="imgService.remoteImg"
-           id="image"/>
-      <button mat-button (click)="imgService.scanCard('s')">
+        <img class="example-card" [src]="imgService.remoteImg"
+             id="image"/>
+        <br>
+      <button mat-button class="mat-elevation-z1 example-container" (click)="imgService.scanCard('s')">
            Scan Remote
        </button>
     </mat-card>
