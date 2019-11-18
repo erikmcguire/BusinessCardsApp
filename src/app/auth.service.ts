@@ -10,6 +10,7 @@ import { auth } from 'firebase/app';
 
 export class AuthService implements OnDestroy {
   asubscription: Subscription;
+
   constructor(public afAuth: AngularFireAuth,
               private router: Router,) {
       this.asubscription = this.afAuth.authState.subscribe(user => {
@@ -30,7 +31,6 @@ export class AuthService implements OnDestroy {
   logout(): boolean {
     this.afAuth.auth.signOut().then(() => {;
         localStorage.removeItem('user');
-        this.router.navigate(['/login']);
     }).catch(err => console.log(err));
     return false;
   }

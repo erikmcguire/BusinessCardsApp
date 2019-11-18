@@ -8,9 +8,12 @@ import { BusinesscardComponent } from './businesscard/businesscard.component';
 import { SearchComponent } from './search/search.component';
 import { NewbusinesscardComponent }
        from './newbusinesscard/newbusinesscard.component';
+import { LandingComponent } from './landing/landing.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: '', redirectTo: 'landing', pathMatch: 'full' },
+    { path: 'landing', component: LandingComponent,
+      data: {animation: 'Landing'} },
     { path: 'login', component: LoginComponent,
       data: {animation: 'Login'} },
     { path: 'not-found', component: NotFoundComponent,

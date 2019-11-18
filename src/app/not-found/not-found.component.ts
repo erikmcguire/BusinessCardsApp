@@ -17,7 +17,7 @@ export class NotFoundComponent implements OnInit {
         if (this.authService.getUser()) {
             this.countDown('/card');
         } else {
-            this.countDown('/login');
+            this.countDown('/landing');
         }
     }
 

@@ -1,5 +1,6 @@
 <div style="margin-top: 10%;">
-    <div *ngIf="!authService.getUser() else elseBlock" class="example-container ">
+    <div *ngIf="!authService.getUser() else elseBlock"
+         class="example-container ">
 
   <mat-expansion-panel class="example-container">
       <mat-expansion-panel-header>
@@ -31,13 +32,12 @@ required></mat-form-field>&nbsp;
 </div>
 <ng-template #elseBlock>
     <div class="example-container ">
-    <mat-card class="example-container">
         <mat-card-subtitle>
             Logged in as <b>{{ printUser() }}</b>
         </mat-card-subtitle>
         <mat-card-content>
-            <a mat-button class="example-container" href (click)="logout()"><mat-icon>exit_to_app</mat-icon> Sign-Out</a>
+            <button mat-button class="example-container centerd" href (click)="logout()"><mat-icon>exit_to_app</mat-icon> Sign-Out</button>
         </mat-card-content>
-    </mat-card></div>
+    </div>
 </ng-template>
 </div>

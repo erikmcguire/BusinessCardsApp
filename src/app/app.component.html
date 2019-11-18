@@ -13,25 +13,25 @@
             <mat-icon class="icon" matPrefix>
                 person_add
             </mat-icon>
-            Add Card
+            &nbsp;Add Card
         </a>
         <a mat-tab-link routerLink="/webcam" routerLinkActive="active">
             <mat-icon class="icon" matPrefix>
                 camera
             </mat-icon>
-            Scan
+            &nbsp;Scan
         </a>
         <a mat-tab-link routerLink="/card" routerLinkActive="active">
             <mat-icon class="icon" matPrefix>
                 import_contacts
             </mat-icon>
-            Contacts
+            &nbsp;Contacts
         </a>
-        <a mat-tab-link routerLink="/login" routerLinkActive="active">
+        <a mat-tab-link (click)="openLogin()">
             <mat-icon class="icon" matPrefix>
-                exit_to_app
+                vpn_key
             </mat-icon>
-            Log in/out
+            &nbsp;Credentials
         </a>
         </nav>
     </div>

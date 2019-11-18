@@ -18,17 +18,20 @@ import { WebcamComponent } from './webcam/webcam.component';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule, MatCardModule,
          MatInputModule, MatIconModule,
+         MatDialogModule,
          MatRadioModule, MatTabsModule,
-         MatListModule, MatButtonModule, MatExpansionModule } from  '@angular/material';
+         MatListModule, MatButtonModule, MatExpansionModule, MatDialogRef, MAT_DIALOG_DATA } from  '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { SearchComponent } from './search/search.component';
 import { ReversePipe } from './businesscard/reverseCards.pipe';
+import { LandingComponent } from './landing/landing.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ReversePipe,
+    LandingComponent,
     LoginComponent,
     NotFoundComponent,
     NewbusinesscardComponent,
@@ -44,6 +47,7 @@ import { ReversePipe } from './businesscard/reverseCards.pipe';
     MatIconModule,
     MatExpansionModule,
     MatInputModule,
+    MatDialogModule,
     MatCardModule,
     MatTabsModule,
     MatListModule,
@@ -59,7 +63,10 @@ import { ReversePipe } from './businesscard/reverseCards.pipe';
     FormsModule,
     HttpModule
   ],
-  providers: [ReversePipe],
+  providers: [ReversePipe,   { provide: MAT_DIALOG_DATA, useValue: {} },   {
+       provide: MatDialogRef,
+       useValue: {}
+     }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

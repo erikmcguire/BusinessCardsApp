@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { RouterOutlet } from '@angular/router';
 import { slideInAnimation } from './animations';
+import { MatDialog } from  '@angular/material';
+import { LoginComponent } from './login/login.component';
 
 declare var gtag;
 
@@ -13,7 +15,8 @@ declare var gtag;
 })
 export class AppComponent {
   title = 'business-cards-app';
-  constructor() {
+
+  constructor(public dialog: MatDialog) {
         gtag('config', environment.firebase.measurementId);
   }
 
@@ -21,6 +24,13 @@ export class AppComponent {
       return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
 }
 
-  public ngOnInit(): void {
-  }
+    openLogin() {
+        this.dialog.open(LoginComponent,
+                         { data: {message:  ""
+                     }});
+    }
+
+    ngOnInit(): void {
+
+    }
 }
