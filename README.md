@@ -8,6 +8,7 @@
 ### Project Requirements
 
 ##### Required Functionality
+
 - [x] New
 - [x] Search
 - [x] Update
