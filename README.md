@@ -1,6 +1,6 @@
 # BusinessCardsApp
 
-* #####[Firebase Deployment](http://business-cards-38b92.web.app/)
+#####[Firebase Deployment](http://business-cards-38b92.web.app/)
 
 #### Approximate Time
   24 hours (distributed).
@@ -124,7 +124,26 @@
 
 #### Behaviour
 
+Upon loading the page, the visitor is directed to a list of their unique, sorted cards if logged in. Otherwise, they will be directed to a default landing page, blocked from visiting the other pages in the navigation toolbar.
+
+Clicking the Credentials button in the toolbar opens a modal dialog whereby the user may authenticate with Firebase with Google or email/pass (with default account as required by the project).
+
+From the Contacts page, the user may edit or delete cards.
+
+The user may scan local or remote card images with Google's APIs, using vision to extract text and language tools to annotate with named entities (e.g., names, locations, organizations). The user is automatically redirected to the add card page, which is autofilled using annotations and custom conditionals. These fields may be cleared or accepted after review and possibly updated by using the full scanning results to make corrections. Upon acceptance, the user is directed to the cards display page.
+
+The search page allows searching by first name or organization. Searches are trimmed and downcased, allowing for more robust results. Searches are confined to unique users, and sorted by timestamp (most recent at the top).
+
+Logging out returns the user to the landing page, without access to the other routes.
+
+
 #### Challenges
+
+Perhaps unsurprisingly, most of the difficulty at this stage was views/CSS-related, as the core business logic services and controlling components were completed in preceding assignments, leaving most of the modifications to views and user interaction tailored around a new suite of features.
+
+Integrating them for a new purpose, of course, entailed unique challenges, with a focus on desired functionality chief in mind--this challenge was also mitigated by a previous assignment (User Stories). A focus on user experience aided debugging while building out the functionalities and their integrated workflow.
+
+Other difficulties included setting up Firebase rules and indices. Google's system (e.g., direct links to index compositing in the console) was very helpful in combining local and remote versions of the project files during development, though I confess to the occasional mishap (e.g. overwriting rules created in the console by neglecting to update the local file on redeployment; neglecting to update indices.json).
 
 ** **
 
