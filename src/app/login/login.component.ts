@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
                           email: JSON.stringify(user.user.email)})
                       }
                 this.dialogRef.close();
-                this.ngZone.run(() => this.router.navigate(['/card']));
+                this.ngZone.run(() => this.router.navigate(['card']));
             });
     }
 
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
     logout(): boolean {
       this.authService.logout();
       this.dialogRef.close();
-      this.router.navigate(['/landing']);
+      this.router.navigate(['landing']);
       return false;
     }
 

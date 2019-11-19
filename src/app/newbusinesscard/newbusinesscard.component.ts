@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 import { ImageService } from '../image.service';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
 import { Card } from '../card.model';
 
 @Component({
@@ -14,8 +13,7 @@ export class NewbusinesscardComponent implements OnInit {
     card: any;
     constructor(private appService: AppService,
                 private imgService: ImageService,
-                private authService: AuthService,
-                private router: Router) {
+                private authService: AuthService) {
     }
 
     addCard(firstName: HTMLInputElement, lastName: HTMLInputElement,
@@ -39,7 +37,6 @@ export class NewbusinesscardComponent implements OnInit {
                       };
       this.card = businessCard;
       this.appService.addCard(businessCard);
-      this.router.navigate(['/card']);
       return false;
       }
 

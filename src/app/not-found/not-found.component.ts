@@ -15,9 +15,9 @@ export class NotFoundComponent implements OnInit {
     ngOnInit() {
         gtag('event', 'not_found');
         if (this.authService.getUser()) {
-            this.countDown('/card');
+            this.countDown('card');
         } else {
-            this.countDown('/landing');
+            this.countDown('landing');
         }
     }
 

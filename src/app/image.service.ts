@@ -154,7 +154,7 @@ export class ImageService implements OnInit, OnDestroy {
         });
         this.filledCard = businessCard;
         if (!this.fromScan) {
-            this.router.navigate(['/add-card']);
+            this.router.navigate(['add-card']);
         } else {
             this.fromScan = false;
         }
@@ -166,7 +166,7 @@ export class ImageService implements OnInit, OnDestroy {
     }
 
     navAdd() {
-        this.router.navigate(['/add-card']);
+        this.router.navigate(['add-card']);
     }
 
     ngOnDestroy() {

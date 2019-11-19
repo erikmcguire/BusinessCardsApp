@@ -8,6 +8,7 @@ import { AngularFirestoreCollection,
 import { BusinesscardComponent }
        from './businesscard/businesscard.component';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +20,12 @@ export class AppService implements OnInit {
   private cardDoc: AngularFirestoreDocument<Card>;
   qsubscription: Subscription;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private router: Router) {
       this.cards = this.afs.collection<Card>(config.collection_endpoint);
   }
 
   addCard(card: any) {
-     this.cards.add(card);
+     this.cards.add(card).then(() => this.router.navigate(['card']));
   }
 
   updateCard(id: string, card) {
