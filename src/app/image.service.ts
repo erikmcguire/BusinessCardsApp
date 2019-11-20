@@ -97,7 +97,11 @@ export class ImageService implements OnInit, OnDestroy {
     }
 
     toTitle(el): string {
-        return el.charAt(el.search(/[^A-z0-9]/)) + " " + el.charAt(el.search(/[A-z]/)).toUpperCase() + el.slice(el.search(/[A-z]/) + 1).toLowerCase()
+        if (el.replace(/\./g, "").length != 2) {
+            return el.charAt(el.search(/[^A-z0-9]/)) + " " + el.charAt(el.search(/[A-z]/)).toUpperCase() + el.slice(el.search(/[A-z]/) + 1).toLowerCase();
+        } else {
+            return el.toUpperCase();
+        }
     }
 
         fillEnts(ents: any) {
@@ -133,15 +137,15 @@ export class ImageService implements OnInit, OnDestroy {
                 case "LOCATION":
                 case "ADDRESS":
                     if (el.name.search(/[0-9]/) != -1) {
-                        businessCard.address = el.name.split(" ")
+                        businessCard.address = el.name.replace(/\n/, " ").replace(/,/, " ").split(" ")
                         .map(w => this.toTitle(w))
-                        .join(" ").replace(/,/, "");
+                        .join(" ").replace(/,([A-z0-9]+)/g, ` $1`).replace(/\s\s/g, " ");
                         break;
                     } else if (!businessCard.address &&
                                el.metadata.wikipedia_url) {
-                               businessCard.address = el.name.split(" ")
-                               .map(w => this.toTitle(w)).join(" ")
-                               .replace(/,/, "");
+                               businessCard.address = el.name.replace(/\n/, " ").replace(/,/, " ").split(" ")
+                               .map(w => this.toTitle(w)).join(" ").replace(/,([A-z0-9]+)/g, ` $1`).replace(/\s\s/g, " ")
+                               ;
                                break;
                     }
                 default:
@@ -170,7 +174,6 @@ export class ImageService implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        console.log("Unsubscribing");
         this.esubscription.unsubscribe();
         this.hsubscription.unsubscribe();
     }

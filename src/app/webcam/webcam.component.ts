@@ -6,6 +6,7 @@ import { ImageService } from '../image.service';
   templateUrl: './webcam.component.html',
   styleUrls: ['./webcam.component.css']
 })
+
 export class WebcamComponent implements OnInit, OnDestroy {
 
     video: HTMLVideoElement;
@@ -41,7 +42,7 @@ export class WebcamComponent implements OnInit, OnDestroy {
         let td = document.getElementById('scanner');
         td.style.display = "none";
         if (this.stream && this.stream.getTracks) {
-            this.stream.getTracks().forEach((track: MediaStreamTrack) => { track.stop()});
+            this.stream.getTracks().forEach((track: MediaStreamTrack) => { track.stop() });
         }
     }
 
