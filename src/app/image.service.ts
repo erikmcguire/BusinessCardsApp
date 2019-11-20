@@ -139,12 +139,12 @@ export class ImageService implements OnInit, OnDestroy {
                     if (el.name.search(/[0-9]/) != -1) {
                         businessCard.address = el.name.replace(/\n/, " ").replace(/,/, " ").split(" ")
                         .map(w => this.toTitle(w))
-                        .join(" ").replace(/,([A-z0-9]+)/g, ` $1`).replace(/\s\s/g, " ");
+                        .join(" ").replace(/,([A-z0-9]+)/g, ` $1`).replace(/[\s]+/g, " ");
                         break;
                     } else if (!businessCard.address &&
                                el.metadata.wikipedia_url) {
                                businessCard.address = el.name.replace(/\n/, " ").replace(/,/, " ").split(" ")
-                               .map(w => this.toTitle(w)).join(" ").replace(/,([A-z0-9]+)/g, ` $1`).replace(/\s\s/g, " ")
+                               .map(w => this.toTitle(w)).join(" ").replace(/,([A-z0-9]+)/g, ` $1`).replace(/[\s]+/g, " ")
                                ;
                                break;
                     }
