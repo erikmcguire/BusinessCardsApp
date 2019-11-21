@@ -10,6 +10,7 @@ import { Card } from './card.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ImageService implements OnInit, OnDestroy {
     localImg = 'assets/images/bateman.png';
     remoteImg = '';
@@ -19,6 +20,7 @@ export class ImageService implements OnInit, OnDestroy {
     filledCard: Card = new Card();
     fromScan: boolean = false;
     txtano: string;
+
     constructor(public http: Http,
                 private authService: AuthService,
                 private router: Router) { }
@@ -98,13 +100,17 @@ export class ImageService implements OnInit, OnDestroy {
 
     toTitle(el): string {
         if (el.replace(/\./g, "").length != 2) {
-            return el.charAt(el.search(/[^A-z0-9]/)) + " " + el.charAt(el.search(/[A-z]/)).toUpperCase() + el.slice(el.search(/[A-z]/) + 1).toLowerCase();
+            return el.charAt(el.search(/[^A-z0-9]/)) + " " +
+            el.charAt(el.search(/[A-z]/)).toUpperCase() +
+            el.slice(el
+              .search(/[A-z]/) + 1)
+              .toLowerCase();
         } else {
             return el.toUpperCase();
         }
     }
 
-        fillEnts(ents: any) {
+    fillEnts(ents: any) {
         let businessCard: any = {};
         businessCard.author = this.authService.afAuth.auth.currentUser.uid;
         businessCard.addedAt = Date.now();

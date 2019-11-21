@@ -1,6 +1,7 @@
 .centerd {
   margin: auto;
   padding: 10px;
+  min-width: 340px;
   width: 50%;
 }
 
