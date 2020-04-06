@@ -3,9 +3,6 @@
 * [Firebase Deployment](http://business-cards-38b92.web.app/)
 * https://github.com/erikmcguire/BusinessCardsApp/
 
-#### Approximate Time
-  24 hours (distributed).
-
 ### Project Requirements
 
 ##### Required Functionality
