@@ -1,7 +1,7 @@
 # BusinessCardsApp
 
 * [Firebase Deployment](http://business-cards-38b92.web.app/)
-* Update: Above deployment now redirects to a closed WIP, creating a flashcards app.
+* Update: Above deployment now directs to a closed WIP (a flashcards app).
 * Note: To run this project, you'll need to provide your own environment file for the API keys, as explained [here](https://angular.io/guide/build)... 
 
 ### Project Requirements
